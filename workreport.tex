@@ -1,0 +1,266 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LaTeX Template: Project Titlepage Modified (v 0.1) by rcx
+%
+% Original Source: http://www.howtotex.com
+% Date: February 2014
+% 
+% This is a title page template which be used for articles & reports.
+% 
+% This is the modified version of the original Latex template from
+% aforementioned website.
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[12pt]{report}
+\usepackage[a4paper]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{graphicx, wrapfig, subcaption, setspace, booktabs}
+\usepackage[T1]{fontenc}
+\usepackage[font=small, labelfont=bf]{caption}
+\usepackage{fourier}
+\usepackage[protrusion=true, expansion=true]{microtype}
+\usepackage[english]{babel}
+\usepackage{sectsty}
+\usepackage{url, lipsum}
+\usepackage{enumitem}
+
+
+\newcommand{\HRule}[1]{\rule{\linewidth}{#1}}
+\renewcommand{\headrulewidth}{0pt}
+\linespread{1.5}
+
+%-------------------------------------------------------------------------------
+% HEADER & FOOTER
+%-------------------------------------------------------------------------------
+% \pagestyle{fancy}
+% \fancyhf{}
+% \fancyhead[L]{Student ID: 20550430}
+% \fancyhead[R]{University of Waterloo}
+% \fancyfoot[C]{\thepage} % / \pageref{LastPage}
+
+%-------------------------------------------------------------------------------
+% TITLE PAGE
+%-------------------------------------------------------------------------------
+
+\begin{document}
+\begin{titlepage}
+   \begin{center}
+    	\normalsize \textbf{\uppercase{University of Waterloo}} \\
+		Faculty of Mathematics \\
+	\end{center}	
+		\vspace*{\stretch{0.1}}
+	\begin{center}
+		\HRule{0.5pt}
+   		\LARGE \textbf{\uppercase{Scaling Systems}}
+   		\HRule{0.5pt}
+	\end{center}
+	\vspace*{\stretch{0.1}}
+	\begin{center}
+	   		\normalsize {Arb Labs\\ Niagara Falls, Ontario}	
+	 
+	\end{center}
+	\vspace*{\stretch{0.1}}
+	\begin{center}
+	   		\normalsize {Prepared by\\
+				Nicholas Westbury\\
+				3A Computer Science\\
+				ID 20550430\\
+	   		 	\today
+	   		 }
+	\end{center}
+\end{titlepage}
+
+\newpage\noindent\thispagestyle{empty}
+\LARGE\textbf{\uppercase{MEMORANDUM}}\\ \\
+\normalsize
+To: SUPERVISOR\\
+From: Nicholas\\
+Date: \today\\
+Re: Work Report: Scaling Systems\\
+\HRule{1.5pt}\\
+
+As we agreed, I have prepared the enclosed report, “LAN in the Workplace,” for
+my 3A work report and for the Internal Computer Support Department. This
+report, the second of four work reports that the Co-operative Education Program
+requires that I successfully complete as part of my BMath Co-op degree
+requirements, has not received academic credit.
+The Internal Computer Support team that you lead provides LAN and hardware
+support to internal users. My job as LAN Support Assistant required that I
+handle all requests for support regarding the network. I responded to telephone,
+e-mail, and in-person queries. This report is an in-depth study of the
+implementation of the company’s new Local Area Network.
+The Faculty of Mathematics requests that you evaluate this report for command
+of topic and technical content/analysis. Following your assessment, the report,
+together with your evaluation, will be submitted to the Math Undergrad Office
+for evaluation on campus by qualified work report markers. The combined
+marks determine whether the report will receive credit and whether it will be
+considered for an award.
+Thank you for your assistance in preparing this report.
+Ima Student (your signature)\\
+
+\newpage\thispagestyle{fancy}\sectionfont{\scshape}
+\section*{Table of Contents}
+\normalsize
+\begin{enumerate}[label=\arabic*,leftmargin=*,labelsep=2ex,ref=\arabic*]
+    \item Intorduction \dotfill 3
+    \item Second chapter \dotfill 4
+      \begin{enumerate}[label*=.\arabic*,leftmargin=*,labelsep=2ex]
+        \item First section \dotfill 5
+        \begin{enumerate}[label*=.\arabic*,leftmargin=*,labelsep=2ex]
+        \item First sub section \dotfill 6
+      \end{enumerate}
+      \end{enumerate}
+    \item References \dotfill 5
+\end{enumerate}
+\fancyfoot[C]{ii}
+
+\newpage\thispagestyle{fancy}\sectionfont{\scshape}
+\section*{List of Figures}
+\normalsize\cfoot{3aa}
+\begin{enumerate}[label=\arabic*,leftmargin=*,labelsep=2ex,ref=\arabic*]
+    \item Awesome Graph \dotfill 3
+\end{enumerate}
+
+\fancyfoot[C]{iii}
+
+\newpage\thispagestyle{fancy}\sectionfont{\scshape}
+\section*{Executive Summary}
+God this is bad.
+
+\fancyfoot[C]{iv}
+
+%-------------------------------------------------------------------------------
+% BODY
+%-------------------------------------------------------------------------------
+
+\newpage\thispagestyle{fancy}\sectionfont{\scshape}
+
+% Reset the page counter
+\setcounter{page}{1}
+\fancyfoot[C]{\thepage}
+
+\section*{Introduction}
+\addcontentsline{toc}{section}{Introduction}
+\par\indent
+This is the text in first paragraph. This is the text in first 
+paragraph. This is the text in first paragraph.
+\\ \par\noindent
+This is the text in second paragraph. This is the text in second 
+paragraph. This is the text in second paragraph.\\
+
+\newpage\thispagestyle{fancy}\sectionfont{\scshape}
+\section*{Analysis}
+\addcontentsline{toc}{section}{Introduction}
+\par\indent
+This is the text in first paragraph. This is the text in first 
+paragraph. This is the text in first paragraph.
+\\ \par\noindent
+This is the text in second paragraph. This is the text in second 
+paragraph. This is the text in second paragraph.\\
+
+\newpage\thispagestyle{fancy}\sectionfont{\scshape}
+\section*{Conclusions}
+\addcontentsline{toc}{section}{Introduction}
+\par\indent
+This is the text in first paragraph. This is the text in first 
+paragraph. This is the text in first paragraph.
+\\ \par\noindent
+This is the text in second paragraph. This is the text in second 
+paragraph. This is the text in second paragraph.\\
+
+\newpage\thispagestyle{fancy}\sectionfont{\scshape}
+\section*{Recommendations}
+\addcontentsline{toc}{section}{Introduction}
+\par\indent
+This is the text in first paragraph. This is the text in first 
+paragraph. This is the text in first paragraph.
+\\ \par\noindent
+This is the text in second paragraph. This is the text in second 
+paragraph. This is the text in second paragraph.\\
+
+
+%-------------------------------------------------------------------------------
+% REFERENCES
+%-------------------------------------------------------------------------------
+\newpage
+\section*{References}
+\addcontentsline{toc}{section}{References}
+
+Anand, U., 2010. The Elusive Free Radicals, \textit{The Clinical Chemist,} [e-journal] Available at:<\url{http://www.clinchem.org/content/56/10/1649.full.pdf}> [Accessed 2 November 2013]
+\newline
+\newline
+
+Biology Forums, 2012. \textit{Normal glomerulus. Acute glomerulonephritis.} [online] Available at: <\url{http://biology-forums.com/index.php?action=gallery;sa=view;id=9284}> [Accessed 23 October 2013].
+\newline
+\newline
+
+Budisavljevic, M., Hodge, L., Barber, K., Fulmer, J., Durazo-Arvizu, R., Self, S., Kuhlmann, M., Raymond, J. and Greene, E., 2003. Oxidative stress in the pathogenesis of experimental mesangial proliferative glomerulonephritis, \textit{American Journal of Physiology - Renal Physiology,} 285(6), pp. 1138-1148.
+\newline
+\newline
+
+
+\end{document}
+
+%-------------------------------------------------------------------------------
+% SNIPPETS
+%-------------------------------------------------------------------------------
+
+%\begin{figure}[!ht]
+%	\centering
+%	\includegraphics[width=0.8\textwidth]{file_name}
+%	\caption{}
+%	\centering
+%	\label{label:file_name}
+%\end{figure}
+
+%\begin{figure}[!ht]
+%	\centering
+%	\includegraphics[width=0.8\textwidth]{graph}
+%	\caption{Blood pressure ranges and associated level of hypertension (American Heart Association, 2013).}
+%	\centering
+%	\label{label:graph}
+%\end{figure}
+
+%\begin{wrapfigure}{r}{0.30\textwidth}
+%	\vspace{-40pt}
+%	\begin{center}
+%		\includegraphics[width=0.29\textwidth]{file_name}
+%	\end{center}
+%	\vspace{-20pt}
+%	\caption{}
+%	\label{label:file_name}
+%\end{wrapfigure}
+
+%\begin{wrapfigure}{r}{0.45\textwidth}
+%	\begin{center}
+%		\includegraphics[width=0.29\textwidth]{manometer}
+%	\end{center}
+%	\caption{Aneroid sphygmomanometer with stethoscope (Medicalexpo, 2012).}
+%	\label{label:manometer}
+%\end{wrapfigure}
+
+%\begin{table}[!ht]\footnotesize
+%	\centering
+%	\begin{tabular}{cccccc}
+%	\toprule
+%	\multicolumn{2}{c} {Pearson's correlation test} & \multicolumn{4}{c} {Independent t-test} \\
+%	\midrule	
+%	\multicolumn{2}{c} {Gender} & \multicolumn{2}{c} {Activity level} & \multicolumn{2}{c} {Gender} \\
+%	\midrule
+%	Males & Females & 1st level & 6th level & Males & Females \\
+%	\midrule
+%	\multicolumn{2}{c} {BMI vs. SP} & \multicolumn{2}{c} {Systolic pressure} & \multicolumn{2}{c} {Systolic Pressure} \\
+%	\multicolumn{2}{c} {BMI vs. DP} & \multicolumn{2}{c} {Diastolic pressure} & \multicolumn{2}{c} {Diastolic pressure} \\
+%	\multicolumn{2}{c} {BMI vs. MAP} & \multicolumn{2}{c} {MAP} & \multicolumn{2}{c} {MAP} \\
+%	\multicolumn{2}{c} {W:H ratio vs. SP} & \multicolumn{2}{c} {BMI} & \multicolumn{2}{c} {BMI} \\
+%	\multicolumn{2}{c} {W:H ratio vs. DP} & \multicolumn{2}{c} {W:H ratio} & \multicolumn{2}{c} {W:H ratio} \\
+%	\multicolumn{2}{c} {W:H ratio vs. MAP} & \multicolumn{2}{c} {\% Body fat} & \multicolumn{2}{c} {\% Body fat} \\
+%	\multicolumn{2}{c} {} & \multicolumn{2}{c} {Height} & \multicolumn{2}{c} {Height} \\
+%	\multicolumn{2}{c} {} & \multicolumn{2}{c} {Weight} & \multicolumn{2}{c} {Weight} \\
+%	\multicolumn{2}{c} {} & \multicolumn{2}{c} {Heart rate} & \multicolumn{2}{c} {Heart rate} \\
+%	\bottomrule
+%	\end{tabular}
+%	\caption{Parameters that were analysed and related statistical test performed for current study. BMI - body mass index; SP - systolic pressure; DP - diastolic pressure; MAP - mean arterial pressure; W:H ratio - waist to hip ratio.}
+%	\label{label:tests}
+%\end{table}
