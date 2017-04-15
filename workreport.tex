@@ -25,10 +25,10 @@
 \usepackage{url, lipsum}
 \usepackage{enumitem}
 
-
+\graphicspath{ {img/} }
 \newcommand{\HRule}[1]{\rule{\linewidth}{#1}}
 \renewcommand{\headrulewidth}{0pt}
-\linespread{1.5}
+\linespread{2}
 
 %-------------------------------------------------------------------------------
 % HEADER & FOOTER
@@ -72,38 +72,30 @@
 \end{titlepage}
 
 \newpage\noindent\thispagestyle{empty}
-\LARGE\textbf{\uppercase{MEMORANDUM}}\\ \\
-\normalsize
-To: SUPERVISOR\\
+\LARGE\textbf{\uppercase{MEMORANDUM}} \normalsize
+\vspace*{-10px}
+\begin{singlespacing}\noindent
+\vspace*{-10px}
+To: Vlad Cazan\\
+\vspace*{-10px}
 From: Nicholas\\
+\vspace*{-10px}
 Date: \today\\
+\vspace*{-10px}
 Re: Work Report: Scaling Systems\\
+\end{singlespacing}
 \HRule{1.5pt}\\
-
-As we agreed, I have prepared the enclosed report, “LAN in the Workplace,” for
-my 3A work report and for the Internal Computer Support Department. This
-report, the second of four work reports that the Co-operative Education Program
-requires that I successfully complete as part of my BMath Co-op degree
-requirements, has not received academic credit.
-The Internal Computer Support team that you lead provides LAN and hardware
-support to internal users. My job as LAN Support Assistant required that I
-handle all requests for support regarding the network. I responded to telephone,
-e-mail, and in-person queries. This report is an in-depth study of the
-implementation of the company’s new Local Area Network.
-The Faculty of Mathematics requests that you evaluate this report for command
-of topic and technical content/analysis. Following your assessment, the report,
-together with your evaluation, will be submitted to the Math Undergrad Office
-for evaluation on campus by qualified work report markers. The combined
-marks determine whether the report will receive credit and whether it will be
-considered for an award.
-Thank you for your assistance in preparing this report.
-Ima Student (your signature)\\
+I have prepared the enclosed report, "Scaling Systems" for my 3A work report. This report, the second of four work reports that the Co-operative Education Program is required as part of my BMath Co-op degree requirements. As you are aware, one of my primary duties as a Python Developer for Winter 2016 was to improve ARB Lab's messaging system. This report is an exploration of our implementation and the thought behind some of the design decisions.\\ \\ \noindent
+The Faculty of Mathematics requests that you evaluate this report for command of topic and technical content/analysis. Following your assessment, the report, together with your evaluation, will be submitted to the Math Undergrad Office for evaluation on campus by qualified work report markers. The combined
+marks determine whether the report will receive credit and whether it will be considered for an award. \\ \\
+Thank you for your assistance in preparing this report.\\ \\
+Nicholas Westbury
 
 \newpage\thispagestyle{fancy}\sectionfont{\scshape}
 \section*{Table of Contents}
 \normalsize
 \begin{enumerate}[label=\arabic*,leftmargin=*,labelsep=2ex,ref=\arabic*]
-    \item Intorduction \dotfill 3
+    \item Introduction \dotfill 3
     \item Second chapter \dotfill 4
       \begin{enumerate}[label*=.\arabic*,leftmargin=*,labelsep=2ex]
         \item First section \dotfill 5
@@ -126,7 +118,8 @@ Ima Student (your signature)\\
 
 \newpage\thispagestyle{fancy}\sectionfont{\scshape}
 \section*{Executive Summary}
-God this is bad.
+What do Facebook, Microsoft, Google and most technology companies have in common? They deal with huge amounts of internet traffic, as much as thousands of requests every second [1]. Systems are specially designed from the ground up to handle the volume and speed of these requests. Our system at ARB Lab relies on a messaging system to handle the communication between multiple pieces of hardware. \\ \\ \noindent
+The goal of this report is to analyze the design decisions of ARB Lab's newly revamped messaging and classification system, considering both the advantages and drawbacks of key decisions. In particular, the messaging system ease of development, speed, and security will be discussed. In the end, the functionality and reasons behind implementation decisions should be clear.
 
 \fancyfoot[C]{iv}
 
@@ -143,42 +136,123 @@ God this is bad.
 \section*{Introduction}
 \addcontentsline{toc}{section}{Introduction}
 \par\indent
-This is the text in first paragraph. This is the text in first 
-paragraph. This is the text in first paragraph.
-\\ \par\noindent
-This is the text in second paragraph. This is the text in second 
-paragraph. This is the text in second paragraph.\\
+ARB Labs was founded as a gesture-recognition company but soon expanded to image recognition when they found a shortcoming in the casino market. Historically, casino pit bosses would manually track each player's bet amounts. This data collection method is both time consuming and error-prone. ARB Labs created an innovative system that captures images of the chips in the bet area of the tables and  classifies the color and value of each of the casino chips using a machine learning algorithm. The system is composed of a small computer cluster installed directly onto existing casino tables and a remote classification server.\\ \\ \noindent
+From a technical standpoint, the main objectives of the bet recognition system are to be reliable, fast, and secure. Messaging queues is one way to meet these objectives. This report will concentrate primarily on exploring the decisions made to improve the system's backend, with particular emphasis on messaging. \\ \par\noindent
 
 \newpage\thispagestyle{fancy}\sectionfont{\scshape}
-\section*{Analysis}
+\section*{Introduction to Messaging Queues}
 \addcontentsline{toc}{section}{Introduction}
 \par\indent
-This is the text in first paragraph. This is the text in first 
-paragraph. This is the text in first paragraph.
-\\ \par\noindent
-This is the text in second paragraph. This is the text in second 
-paragraph. This is the text in second paragraph.\\
+Messaging queues are one of the most popular methods to communicate between processes or computers. A basic messaging queue is composed of two major components, a producer, also called a publisher, and a consumer, also known as a subscriber. As the name implies, the role of a producer is to send a message to a consumer queue. The consumer then pops messages from its queue and reads them in the order they are sent (generally-speaking).
+\\ \\
+\begin{figure}[h]
+\centering
+\includegraphics{simple_queue}
+\caption{A producer $P$ produces to a queue which is read from consumer $C$.}
+\end{figure}
+\\ \\
+That's the core idea but many implementation details are left to individual messaging queue software and configurations. Some important implementation-specific details include:
+\begin{itemize}
+  \item The delivery method used to pass messages from a producer to consumer. For example HTTP, TCP, SSH are all possible transportation protocols.
+  \item The queue durability after a message is received can either be persistent if storing the messages or temporary for real-time queues.
+  \item The routing method when a producer sends a message can be either directly to a single queue or to multiple queues. The messaging queue can have an "exchange" and a "routing key" to determine which queue(s) to deliver the message to. 
+  \item Information is generally passed unilaterally from a producer to a consumer, though a process can be both a producer and a consumer if using the request/reply messaging pattern, allowing to know when a message was successfully received by a consumer.
+  \item Messages can be sent individually or in batches.
+\end{itemize}
+ 
+\newpage\thispagestyle{fancy}\sectionfont{\scshape}
+\section*{A Comparison of Messaging Queues}
+\addcontentsline{toc}{section}{Introduction}
+\par\indent
+Our system considered three different software project implementing queues: Redis, Kafka, and RabbitMQ. Each of the products work differently and offers different advantages and drawbacks.
+
+\subsection*{Fault Tolerance and Queue Persistence}
+
+One import consideration for our system is the fault tolerance. We will be deploying our system to remote locations and therefore do have the luxury to easily do on-site maintenance. We want to be able for the queues to recover from their queues if there are still messages in transition when the system fails and is rebooted. In the Redis messaging queue all messages are stored in-memory by default meaning that if the consumer computer loses power then all messages would be lost and the system would be in an unstable state. On the other hand, if the queue is persistent then the messages can recover on reboot. Queue persistence is possible in both Kafka and RabbitMQ.
+
+\subsection*{Configuration Complexity}
+
+On Kafka, queue configuration is primarily done on each of the brokers where the messages are sent. On the other hand, Redis allows for most of the configuration to be done on per-queue basis and RabbitMQ on a per-exchange basis. From a practical standpoint, it is more convenient to set a smaller amount of settings for each of the queues then it is to configure the hundreds of options available on Kafka on each broker. [CITATION]
+
+\subsection*{Throughput vs Median Message Speed}
+
+Counterintuitively, the throughput and message received speed are not the same. After benchmarking Kafka, we found that although it has the highest throughput and the lowest \textit{average} message received time when sending 600 kilobytes messages, it did not necessarily the lowest median message speed. By default, Kafka tries to send multiple messages in a single compressed message, thereby increasing throughput when there is a constant stream of messages. However, when the messages are sent more slowly, the median time to receive the message is higher because the Kafka broker unsuccessfully waits to combine the messages. Our particular use case experiences traffic in short bursts of multiple messages, and so RabbitMQ with a lower throughput, but lower median message time was a better fit.\\
+
+\newpage
+The following table summarizes the significant differences between the systems:
+\begin{center}
+\begin{tabular}{ |c|c|c|c| }
+ \hline
+ Name & \textbf{Redis} & \textbf{Kafka} & \textbf{RabbitMQ} \\ \hline
+ Queues Persistence & In-memory & Persistent & Persistent\\ \hline
+ Fault Tolerance & Low & High & High\\ \hline
+ Replication & By Queue & By Broker  & By Queue \\ \hline
+ Design Complexity & Low & High & Low \\ \hline
+ Throughput & Medium & High (network limit) & Medium \\ \hline
+ Message Speed & High & Medium (batched) & High \\ \hline 
+\end{tabular}
+\end{center}
 
 \newpage\thispagestyle{fancy}\sectionfont{\scshape}
-\section*{Conclusions}
-\addcontentsline{toc}{section}{Introduction}
-\par\indent
-This is the text in first paragraph. This is the text in first 
-paragraph. This is the text in first paragraph.
-\\ \par\noindent
-This is the text in second paragraph. This is the text in second 
-paragraph. This is the text in second paragraph.\\
+\section*{Information Flow}
+\par
+
+The way the system communicates between each of its components was one of particular interest to us. There are two broad divisions to our table system: the camera capturing component and the displaying component. The camera capturing component is itself composed of a camera cluster, four small computers that control a camera, and a handcount unit, a proximity sensor activated on a hand start. The display component is composed of two screens and a magnetic reader, for logging in players and dealers. Each table also communicates with a central databases which handles the image classification, login handling, and log collecting.
+
+\subsection*{Data Flow}
+To understand the system structure, it is crucial to understand the information is passed around the system. There are four steps, login, hand start signal, evaluation, and displaying the evaluation. Each step in this process communicates with at least one other consumer or producer and is a strict chronological order.
+
+\begin{enumerate}
+  \item First player(s) and dealer are logged into the system using a magnetic reader produces to the screen. In turn, the screen produces a login message to the database and displays a player login on the screen if the database successfully issues the login.
+  
+  \item When a hand is going to start, the handcount unit is activated producing to the camera controller consumer. The camera controller then produces to a message to all cameras causing them to capture images.
+  
+  \item Each of the four cameras then sent their images to the server for evaluation.
+  
+  \item The server finally sends the chip amount in each of the images to the screens.
+
+\end{enumerate}
+
+This data flow is summarized in the diagram below:
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.50]{system_diagram}
+\caption{A summary of the system where the consumers are in red, the producers are in green, and a combination of both are in yellow. Consumer queues are in blue.}
+\end{figure}
 
 \newpage\thispagestyle{fancy}\sectionfont{\scshape}
-\section*{Recommendations}
-\addcontentsline{toc}{section}{Introduction}
-\par\indent
-This is the text in first paragraph. This is the text in first 
-paragraph. This is the text in first paragraph.
-\\ \par\noindent
-This is the text in second paragraph. This is the text in second 
-paragraph. This is the text in second paragraph.\\
+\section*{Module Abstraction}
 
+\subsection*{Modularity}
+One of the requirements for our system is the ability to easily swap out components tailored to particular clients needs. For instance, a particular casino can request to have a different database system, such as MySQL (Structured Query Language), instead of our default MongoDB. To accommodate this type of change, we chose to use the object-oriented paradigm with fully virtual classes for most of our classes [3]. This model is similar to Java's interface where only function signatures are declared and a separate class implements these methods. \\ \\
+Since our code base is written almost exclusively in Python, we used the "abc" module to allow for virtual methods to be declared. This allows the multiple database connector to inherit from a database connector interface that has high-level functions such "insert\_into\_database" or "fetch\_from\_database". With this code organization, implementing different versions is simply a matter of implementing those methods.
+
+\subsection*{Modules as Message Relays}
+Another property of the system is that each of the many physical components are sufficiently abstracted such that they can be treated essentially as a consumer and/or producer, without the need to understand how the message is sent. The only knowledge that may change between modules is the message format, once that is known the consumer doesn't need to concern itself how it was sent or implemented internally. The message-only communication creates strong distinction between modules and therefore lowers the coupling of the modules, making it easier to maintain and read each module's code [4].
+
+\newpage\thispagestyle{fancy}\sectionfont{\scshape}
+\section*{Message Stability \& Security}
+
+\subsection*{Message Consistency}
+Usually having messages synchronized is not an issue for most of our components, since they act completely independently. Cameras, display update, all update when they receive a message and have no concept of state. However, for authentication the concept of atomic transaction applies since there are two components, in this case the screen and the database, that need to have a synchronized state. An atomic transaction is where either the entire login or logout operation happens, or nothing at all [5]. This is crucial to maintain synchronization. \\
+With our distributed model, implementing a truly atomic authentication transaction is surprisingly complex. To handle the vast majority of cases, the screen should update its status only after receiving a response from the database with whether the authentication was issued or not. With a response from the database, the screen is known to have the login state as the database. In addition to responding to each authentication request a timeout for each message is implemented. For example, the screen updates only on a positive database response if a response is received within the timeout time. This pattern called a request-reply pattern and is common in web development. \\
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.55]{communication}
+\caption{The request/reply pattern}
+\end{figure}
+\noindent
+Although this simple model is far better than no response at all, it is not truly transactional, since there are rare cases where the system could enter an inconsistent state. For example, if the screen were to fail after sending a message but before a database response then the screen and database would differ in state. The traditional solutions are either to maintain high uptime, to sidestep the issue entirely, or have a central broker to issue transactions [6]. Given the additional complexity required to have a central broker and the extremely low probability of failure, a fully-transactional system makes only makes sense in contexts were correctness is mission critical.
+
+\subsection*{Message Security}
+Message security is another important consideration. In particular, a system should ensure there cannot be a man-in-middle attack where a malicious computer can intercept and potentially modify the message while in transit in the network. RabbitMQ makes it easy to implement Transport Layer Security (TLS) with RSA encryption, the same encryption that is used by websites to encrypt HTTP requests. With this encryption, it is impractical to read any intercepted message because it would take an estimated 6.4 quadrillion years of computing time to crack the 2048 bit RSA [7].
+
+\newpage\thispagestyle{fancy}\sectionfont{\scshape}
+\section*{Conclusion}
+\addcontentsline{toc}{section}{Conclusion}
+\par\indent
+Of the possible methods to relay information from physical components, messaging queues have proven to offer many advantages over alternatives methods for our use case. It is fast, secure, and gives significant development ease. The drawbacks when it comes to messaging speed, transactional method can worked around. \\ \\ \noindent
 
 %-------------------------------------------------------------------------------
 % REFERENCES
@@ -187,80 +261,15 @@ paragraph. This is the text in second paragraph.\\
 \section*{References}
 \addcontentsline{toc}{section}{References}
 
-Anand, U., 2010. The Elusive Free Radicals, \textit{The Clinical Chemist,} [e-journal] Available at:<\url{http://www.clinchem.org/content/56/10/1649.full.pdf}> [Accessed 2 November 2013]
-\newline
-\newline
-
-Biology Forums, 2012. \textit{Normal glomerulus. Acute glomerulonephritis.} [online] Available at: <\url{http://biology-forums.com/index.php?action=gallery;sa=view;id=9284}> [Accessed 23 October 2013].
-\newline
-\newline
-
-Budisavljevic, M., Hodge, L., Barber, K., Fulmer, J., Durazo-Arvizu, R., Self, S., Kuhlmann, M., Raymond, J. and Greene, E., 2003. Oxidative stress in the pathogenesis of experimental mesangial proliferative glomerulonephritis, \textit{American Journal of Physiology - Renal Physiology,} 285(6), pp. 1138-1148.
-\newline
-\newline
-
+\begin{enumerate}
+\item "Google Search Statistics." Google Search Statistics - Internet Live Stats. N.p., n.d. Web. 15 Apr. 2017.
+\item "abc - Abstract Base Classes." abc - Abstract Base Classes - Python 2.7.13 documentation. N.p., n.d. Web. 15 Apr. 2017.
+\item "RabbitMQ Documentation." RabbitMQ. N.p., n.d. Web. 15 Apr. 2017.
+\item "Documentation." Apache Kafka. N.p., n.d. Web. 15 Apr. 2017.
+\item Matthew Warren. "High Cohesion, Loose Coupling." The Bojan's Blog. N.p., 8 Apr. 2015. Web. 15 Apr. 2017.
+\item Niemeyer, Patrick. Learning java. N.p. O'Reilly Media, 2017. Print.
+\item Kaye, Doug. Loosely coupled: the missing pieces of Web services. Marin County, CA: RDS Press, 2003. Print.
+\item "The Math Behind Estimations to Break a 2048-bit Certificate." Just How Strong is 2048-bit SSL Certificate Encryption? N.p., n.d. Web. 15 Apr. 2017.
+\end{enumerate}
 
 \end{document}
-
-%-------------------------------------------------------------------------------
-% SNIPPETS
-%-------------------------------------------------------------------------------
-
-%\begin{figure}[!ht]
-%	\centering
-%	\includegraphics[width=0.8\textwidth]{file_name}
-%	\caption{}
-%	\centering
-%	\label{label:file_name}
-%\end{figure}
-
-%\begin{figure}[!ht]
-%	\centering
-%	\includegraphics[width=0.8\textwidth]{graph}
-%	\caption{Blood pressure ranges and associated level of hypertension (American Heart Association, 2013).}
-%	\centering
-%	\label{label:graph}
-%\end{figure}
-
-%\begin{wrapfigure}{r}{0.30\textwidth}
-%	\vspace{-40pt}
-%	\begin{center}
-%		\includegraphics[width=0.29\textwidth]{file_name}
-%	\end{center}
-%	\vspace{-20pt}
-%	\caption{}
-%	\label{label:file_name}
-%\end{wrapfigure}
-
-%\begin{wrapfigure}{r}{0.45\textwidth}
-%	\begin{center}
-%		\includegraphics[width=0.29\textwidth]{manometer}
-%	\end{center}
-%	\caption{Aneroid sphygmomanometer with stethoscope (Medicalexpo, 2012).}
-%	\label{label:manometer}
-%\end{wrapfigure}
-
-%\begin{table}[!ht]\footnotesize
-%	\centering
-%	\begin{tabular}{cccccc}
-%	\toprule
-%	\multicolumn{2}{c} {Pearson's correlation test} & \multicolumn{4}{c} {Independent t-test} \\
-%	\midrule	
-%	\multicolumn{2}{c} {Gender} & \multicolumn{2}{c} {Activity level} & \multicolumn{2}{c} {Gender} \\
-%	\midrule
-%	Males & Females & 1st level & 6th level & Males & Females \\
-%	\midrule
-%	\multicolumn{2}{c} {BMI vs. SP} & \multicolumn{2}{c} {Systolic pressure} & \multicolumn{2}{c} {Systolic Pressure} \\
-%	\multicolumn{2}{c} {BMI vs. DP} & \multicolumn{2}{c} {Diastolic pressure} & \multicolumn{2}{c} {Diastolic pressure} \\
-%	\multicolumn{2}{c} {BMI vs. MAP} & \multicolumn{2}{c} {MAP} & \multicolumn{2}{c} {MAP} \\
-%	\multicolumn{2}{c} {W:H ratio vs. SP} & \multicolumn{2}{c} {BMI} & \multicolumn{2}{c} {BMI} \\
-%	\multicolumn{2}{c} {W:H ratio vs. DP} & \multicolumn{2}{c} {W:H ratio} & \multicolumn{2}{c} {W:H ratio} \\
-%	\multicolumn{2}{c} {W:H ratio vs. MAP} & \multicolumn{2}{c} {\% Body fat} & \multicolumn{2}{c} {\% Body fat} \\
-%	\multicolumn{2}{c} {} & \multicolumn{2}{c} {Height} & \multicolumn{2}{c} {Height} \\
-%	\multicolumn{2}{c} {} & \multicolumn{2}{c} {Weight} & \multicolumn{2}{c} {Weight} \\
-%	\multicolumn{2}{c} {} & \multicolumn{2}{c} {Heart rate} & \multicolumn{2}{c} {Heart rate} \\
-%	\bottomrule
-%	\end{tabular}
-%	\caption{Parameters that were analysed and related statistical test performed for current study. BMI - body mass index; SP - systolic pressure; DP - diastolic pressure; MAP - mean arterial pressure; W:H ratio - waist to hip ratio.}
-%	\label{label:tests}
-%\end{table}
