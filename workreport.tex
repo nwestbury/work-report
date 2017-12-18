@@ -11,7 +11,9 @@
 \usepackage{sectsty}
 \usepackage{url, lipsum}
 \usepackage{enumitem}
+\usepackage{float}
 
+\restylefloat{table}
 \graphicspath{ {img/} }
 \newcommand{\HRule}[1]{\rule{\linewidth}{#1}}
 \renewcommand{\headrulewidth}{0pt}
@@ -39,19 +41,19 @@
 		\vspace*{\stretch{0.1}}
 	\begin{center}
 		\HRule{0.5pt}
-   		\LARGE \textbf{\uppercase{Scaling Messaging Queues}}
+   		\LARGE \textbf{\uppercase{Introduction to Machine Learning in Finance: Applications \& Implications}}
    		\HRule{0.5pt}
 	\end{center}
 	\vspace*{\stretch{0.1}}
 	\begin{center}
-	   		\normalsize {ARB Labs\\ Niagara Falls, Ontario}	
+	   		\normalsize {TD Asset Management\\ Toronto, Ontario}	
 	 
 	\end{center}
 	\vspace*{\stretch{0.1}}
 	\begin{center}
 	   		\normalsize {Prepared by\\
 				Nicholas Westbury\\
-				3A Computer Science\\
+				3B Computer Science\\
 				ID 20550430\\
 	   		 	\today
 	   		 }
@@ -63,61 +65,67 @@
 \vspace*{-10px}
 \begin{singlespacing}\noindent
 \vspace*{-10px}
-To: Vlad Cazan\\
+To: TDAM Manager\\
 \vspace*{-10px}
-From: Nicholas\\
+From: Nicholas Westbury\\
 \vspace*{-10px}
 Date: \today\\
 \vspace*{-10px}
-Re: Work Report: Scaling Systems\\
+Re: Work Report: Introduction to Machine Learning in Finance \\
 \end{singlespacing}
 \HRule{1.5pt}\\
-I have prepared the enclosed report, "Scaling Messaging Queues" for my 3A work report. This is the second of four work reports that the Co-operative Education Program required as part of Co-op degree requirements. As you are aware, one of my primary duties as a Python Developer for Winter 2016 was to improve ARB Lab's messaging system. This report is an exploration of our implementation and the thought behind some of the design decisions.\\ \\ \noindent
+I have prepared the enclosed report, "Introduction to Machine Learning in Finance: Application \& Implications" for my 3B work report. This is the third of four work reports that the Co-operative Education Program required as part of Co-op degree requirements. As you are aware, my primary duty this work term was to support the portfolio analytics web tool. This report is an exploration of a potentially disruptive technology to this industry.\\ \\ \noindent
 As part of this process, the Faculty of Mathematics requests that you evaluate this report for command of topic and technical content/analysis. Your evaluation will be submitted to the Math Undergrad Office for evaluation. The combined marks determine whether the report will receive credit. \\ \\
 Thank you for your help in preparing this report,\\ \\ \noindent
 \includegraphics[scale=0.55]{signature}
 
 \newpage\thispagestyle{fancy}\sectionfont{\scshape}
-\section*{Table of Contents}
+\section*{\centering Table of Contents}
 \normalsize
 \begin{enumerate}[label={},leftmargin=*,labelsep=2ex]
     \item 1.0 Introduction \dotfill 1
     \item 2.0 Analysis \dotfill 2
-    \item 2.1 Introduction to Messaging Queues \dotfill 2
-    \item 2.2 Comparison of Messaging Queues \dotfill 4
+    \item 2.1 Applications \dotfill 2
       \begin{enumerate}[label*={},leftmargin=*,labelsep=2ex]
-        \item 2.2.0 Fault Tolerance and Queue Persistence \dotfill 4
-        \item 2.2.1 Configuration Complexity \dotfill 4
-        \item 2.2.2 Throughput vs Median Message Speed \dotfill 5
+        \item 2.1.1 Customer Service \dotfill 2
+        \item 2.1.2 Fraud Detection \dotfill 3
+        \item 2.1.3 Portfolio Analysis \dotfill 3
       \end{enumerate}
-    \item 2.3 Information Flow \dotfill 7
-    \item 2.4 Module Abstraction \dotfill 9
-    \item 2.5 Message Stability \& Security \dotfill 11
+    \item 2.2 Active Portfolio Analysis \dotfill 5
     \begin{enumerate}[label*={},leftmargin=*,labelsep=2ex]
-        \item 2.5.0 Message Consistency \dotfill 11
-        \item 2.5.1 Message Security \dotfill 12
-      \end{enumerate}
-    \item 3.0 Conclusion \dotfill 13
-    \item 4.0 References \dotfill 14
+    	\item 2.2.1 Is portfolio optimization even possible? \dotfill 5
+    \end{enumerate}
+   	\item 2.3 Comparison of Algorithmic Methods \dotfill 6
+    \begin{enumerate}[label*={},leftmargin=*,labelsep=2ex]
+        \item 2.3.1 Linear Regression \dotfill 7
+        \item 2.3.2 Support-Vector Machine \dotfill 8
+        \item 2.3.3 Neural Network \dotfill 9
+        \item 2.3.4 Evolution Algorithms \dotfill 10
+      	\item 2.3.5 Summary of comparisons \dotfill 11
+    \end{enumerate}
+    \item 3.0 Conclusion \dotfill 12
+    \item 4.0 References \dotfill 13
 \end{enumerate}
 \fancyfoot[C]{ii}
 
 \newpage\thispagestyle{fancy}\sectionfont{\scshape}
-\section*{List of Figures}
+\section*{\centering List of Figures}
 \normalsize\cfoot{3aa}
 \begin{enumerate}[label=\arabic*,leftmargin=*,labelsep=2ex,ref=\arabic*]
-    \item Messaging Queues Diagram \dotfill 2
-    \item Comparison of Messaging Queue Platforms \dotfill 6
-    \item Data Flow Diagram \dotfill 8
-    \item Authentication Flow Diagram \dotfill 12
+    \item Linear Regression Graph \dotfill 8
+    \item Neural Network Nodes \dotfill 9
+    \item Comparison Table \dotfill 11
+    \item Algorithm Adoption Graph \dotfill 12
 \end{enumerate}
 
 \fancyfoot[C]{iii}
 
 \newpage\thispagestyle{fancy}\sectionfont{\scshape}
-\section*{Executive Summary}
-What do Facebook, Microsoft, Google and most technology companies have in common? Each handles huge amounts of internet traffic, with as much as thousands of requests per second (1). Systems are specially designed from the ground up to handle the volume and speed of these requests. Our system at ARB Labs relies on a messaging system to handle the communication across a network of modules. \\ \\ \noindent
-This report will analyze the design decisions of ARB Labs' newly revamped messaging and classification system, considering both the advantages and drawbacks of key decisions. In particular, the ease of development, speed, and security will be discussed. Leaving a clear understanding of the functionality and justifications for implementation decisions.
+\section*{\centering Executive Summary}
+
+This report looks at the potential applications, both present and future, of machine learning in finance. It explores deeper the particular task of portfolio optimization. It considers four algorithms: linear regression, evolution, support-vector machine, and neural networks for the portfolio optimization task and gives a high-level overview of their functionality, comparing some of their advantages and disadvantages.
+
+After reading this report, the reader should have a basic understanding of what machine learning is, how some particular algorithms work, and some of the considerations that goes into developing tools to solve this particular task such as the type of data used and how data is classified from the raw input data. In conclusion, you'll understand the importance of machine learning and why their adoption has been trending upwards.
 
 \fancyfoot[C]{iv}
 
@@ -131,129 +139,112 @@ This report will analyze the design decisions of ARB Labs' newly revamped messag
 \setcounter{page}{1}
 \fancyfoot[C]{\thepage}
 
-\section*{1.0 Introduction}
+\section*{\centering 1.0 Introduction: What is Machine Learning?}
 \addcontentsline{toc}{section}{Introduction}
 \par\indent
-ARB Labs was founded as a gesture-recognition company but soon expanded to image recognition when they found a shortcoming in the casino market. Historically, casino pit bosses would manually track the amount of each player's bet. This data collection method is both time consuming and error-prone. As a solution, ARB Labs developed an innovative bet recognition system that captures images of the chips in the bet area of the tables,  classifying the colour and value of each of the casino chips using a machine learning algorithm. The system is composed of a small computer cluster installed directly onto existing casino tables with a remote classification server.\\ \\ \noindent
-From a technical standpoint, it is critical of that the system is reliable, fast, and secure. To accomplish these goals, the various computers need to be able to communicate amongst each other effectively. Messaging queues is one popular way to communicate across processes. This report will concentrate primarily on exploring the decisions made to improve the system's backend, with particular emphasis on messaging between the system components. \\ \par\noindent
+Quantitative data has always been a core pillar of the finance industry. From hedge funds using a variety of numeric indicators to predict an economy's health to accountants calculating companies' output, the finance industry has been intrinsically linked with numbers. Traditionally, human workers have manually used these numbers to inform their decisions, such as whether to buy or sell an asset or the amount of risk to take. Given the ever-increasing quantity of data, making good decisions is a difficult task. The sector is therefore a natural target for applying algorithms to systemically organize and analyze information.
+\\ \par\noindent
+One relatively recent advancement in algorithmic analysis has been labeled "Machine Learning". In short, machine learning the application of statistical and optimization methods to recognize and learn from patterns in data. Algorithms can range dramatically in sophistication from linear regression, classifying data based on if it falls above or below a threshold, to neural networks, layers of nodes that each learn about increasingly abstract features of the data. This class of algorithms have a plethora of applications in all fields, but especially those dealing with quantification like finance. This report will explore some of the current applications, particularly stock analysis, and future implications of computational learning.
 
 \newpage\thispagestyle{fancy}\sectionfont{\scshape}
-\section*{2.1 Introduction to Messaging Queues}
-\addcontentsline{toc}{section}{Introduction}
+\section*{\centering 2.0 Analysis}
+\subsection*{\centering 2.1 Applications}
+\noindent
+There are variety of algorithm applications within the finance industry that offer considerable advantages over their human counterparts. Customer service, fraud detection, and portfolio-analysis are three of the primary which have been adopting machine learning techniques [1].
+
+\subsection*{\centering 2.1.1 Customer Service}
 \par\indent
-Messaging queues are one of the most popular methods to communicate between processes or computers. A basic messaging queue is composed of two major components, a producer (also called a publisher) and a consumer (also known as a subscriber). As the name implies, the role of a producer is to send a message to a consumer queue. The consumer then pops messages from its queue and reads them in the order they were sent from the producer (generally speaking).
-\\ \\
-\begin{figure}[h]
-\centering
-\includegraphics{simple_queue}
-\caption{A producer $P$ produces to a queue which is read from consumer $C$.}
-\end{figure}
-\\ \\
-Many implementation details are left to individual messaging queue software and configurations. Some important implementation-specific details include:
-\begin{itemize}
-  \item The delivery method used to pass messages from a producer to consumer. For example Hypertext Transfer Protocol (HTTP), Transmission Control Protocol (TCP), and Secure Shell (SSH) are all possible transportation protocols.
-  \item The queue durability after a message is received can either be persistent storing the messages or temporary for real-time queues.
-  \item When a producer sends a message can either be sent directly to a single queue or to multiple queues. The messaging queue can have an "exchange" and a "routing key" to determine which queue(s) to deliver the message to. 
-  \item Information is generally passed unilaterally from a producer to a consumer. However, a process can be both a producer and a consumer if using the request/reply messaging pattern, allowing for indication when a message was successfully received by a consumer.
-  \item Messages can be sent individually or in batches.
-\end{itemize}
- 
+One of the most promising applications of deep learning is in customer service. In particular, answering customers questions on a variety of topics can be highly automated. Chatbots, where customers ask questions that are processed in real-time and answered by an algorithm, are becoming increasingly accurate and popular. Questions like "what is my account balance" or "how to I open a TFSA" that would traditionally be answered by a bank teller can now be instead answered by a web service. The advantages are obvious; to the banks, they lower dependence on physical branches saving money on staff. To the customers, their questions are answered faster, more conveniently, and potentially more accurately. In the future, this will have an even greater presence. Gartner analytics predicts that 85\% of banking will happen through electronic means by 2020 [2].
+
 \newpage\thispagestyle{fancy}\sectionfont{\scshape}
-\section*{2.2 A Comparison of Messaging Queues}
+\subsection*{\centering 2.1.2 Fraud Detection}
 \addcontentsline{toc}{section}{Introduction}
 \par\indent
-Our system considered three different software project implementing queues: Redis, Kafka, and RabbitMQ. Each of these products work differently and offer unique advantages and drawbacks.
+A second application where banks have already applied traditional algorithms for years is fraud detection. This is an important problem because despite only approximately 0.1\% of transactions being fraudulent, hundreds of millions of dollars are still lost to fraud every year [3].  In the recent past, credit card companies and other financial institutions set explicit flags to detect potentially suspicious activity, factors such as location and amount spend, which are often good potential indicators of fraud. Due to such low occurrences though, these methods are susceptible to false positives, when fraud is incorrect detected. Recently, more sophisticated machine learning algorithms can find correlations between transaction metrics that a hard-coded set of rules in flagging algorithms would miss and put less weight to less important factors. For example, a machine learning algorithm might find the frequency and location of transactions should be weighted as more important factors than amount and purchase type.
 
-\subsection*{2.2.0 Fault Tolerance and Queue Persistence}
 
-One important consideration for our system is the fault tolerance. We will be deploying our system to remote locations and therefore have the ability to easily perform on-site maintenance. There is a requirement for the queues to recover from their queues if there are still messages in transition when the system fails and is rebooted. In the Redis messaging queue all messages are stored in-memory by default. This means that if the consumer computer loses power then all messages would be lost, leaving the system in an unstable state. On the other hand, if the queue is persistent then the messages can recover on reboot. Queue persistence is possible in both Kafka and RabbitMQ.
+\subsection*{\centering 2.1.3 Portfolio Analysis}
+\par\indent
+A third popular application is to use machine learning algorithms to analyze portfolios. Different portfolios have different objectives from maximizing short-term returns to minimizing long-term risks. These types of optimization problems are well-suited for applying machine learning algorithms since the value function, return on investment, is clear. There is a considerable range of sophistication. The simplest form is closer to a passive investment strategy, where an algorithm allocates different a diversity of asset classes (e.g. stocks, bonds, currencies) based on risk tolerance. This is what popular robo-investing website like Wealthsimple, a Toronto start-up, offer because it minimizes risk.
+\par\noindent \\
+In addition to the passive investment strategy, algorithmic active asset selection is possible. These use financial metrics of an asset, such as earning per share, to evaluate whether an asset is under or overvalued and make trades based on these evaluations. Time-series analysis methods, where these metrics change over time is a common approach. Furthermore, algorithms can also be to take into account more abstract data such as sentiment analysis. Mentions of a particular the company in online articles or social media websites are analyzed to find the mood which people are talking about an asset or the overall economy. For example, if mentions generally use positive words when talking about an asset, it may be a good indicator that people are confident in the company. The remainder of this report will concentrate on explaining and comparing some of these algorithms.
 
-\subsection*{2.2.1 Configuration Complexity}
+\section*{\centering 2.2 Active Portfolio Analysis}
+\subsection*{\centering 2.2.1 Is portfolio optimization even possible? }
 
-On Kafka, queue configuration is primarily done on each of the brokers where the messages are sent. On the other hand, Redis allows for most of the configuration to be done on per-queue basis and RabbitMQ on a per-exchange basis. From a practical standpoint, it is more convenient to set a smaller number of settings for each of the queues than to configure the hundreds of options available on Kafka on each broker (2).
+Ever since financial markets where created, traders have been trying to find an edge to give them an advantage over others. Machine learning is just the latest iteration. There is a legitimate question of whether or not computational methods have good predictive power.
+\par\noindent
+One one hand, academia has consistently found that algorithms where generally on par with their benchmarks (generally a buy-and-hold strategy) [4][5]. This may suggest that either the data has weak predictive power or the market is "efficient", meaning it strongly reflects the data and therefore profit opportunities are marginal. Another reason the portfolio optimization problem is unsolved is that real-world data is imperfect, it can be expensive to access high-quality stock data for example, and even then accuracy will often be low.
 
-\subsection*{2.2.2 Throughput vs Median Message Speed}
+On the other hand, as Clive Granger from the University of California points out there is a "possible reporting bias - if a method of forecasting found an academic might prefer to profit from it
+rather than publish" [5]. To further support this point, Two Sigma and Renaissance, two of the world's largest hedge funds, actively employ data scientists. This type of hiring implies there is some value generation possible. Given the right tools, it is likely possible to take advantage of obscure patterns in data that the general investing public cannot.
 
-Counterintuitively, the throughput and message received speed are not the same. After benchmarking Kafka, it was apparent that although it has the highest throughput and the lowest \textit{average} message received time it did not necessarily have the lowest median message speed for our binary image data. By default, Kafka sends multiple messages in a single compressed message, thereby increasing throughput when there is a constant stream of messages. However, when the messages are sent more slowly, the median time to receive the message is higher because the Kafka broker unsuccessfully waits to combine the messages. In our particular case, data traffic is sent in short bursts of multiple messages. Although RabbitMQ features a lower throughput, its lower median message time made it a better fit for this task.\\
+\subsection*{\centering 2.2.2 Types of data}
+For all machine learning methods, understanding the types of information available is particularly important. In finance, we have several types of data that is feed as input to the portfolio optimization algorithm: technical data, fundamental data, economic data, and sentimental data. Technical data refers to pricing data and related ratios like moving average price. Fundamental data refers to financial number generally released in quarterly reports such as earnings per share.  Economic data refers to economy-wide numbers like employment percentage which can reflect on individual companies. Finally there is sentimental data, this is generally collected from news articles or social media that relate a company to positive or negative emotions. Technical, fundamental, and economic data are the most commonly used due to its relatively-easy access. Pricing data is frequently updated making it a useful for machine learning application that require large amounts of data. Other types of data like fundamental data generally has more predictive power. The majority of portfolio analysis uses a time series analysis with technical data supplemented with other types of data.
 
-\newpage
+\subsection*{\centering 2.3 Comparison of Algorithmic Methods}
 
-In summary, each messaging queue platform has its own advantages and drawbacks. Redis is the easiest message queue platform to develop in but it lacks the speed and full queue persistence. Kafka is flexible and extendable but can be difficult to configure. RabbitMQ is a middle ground between these platforms. The following table summarizes the significant differences between the systems:
+We will consider a few different algorithmic approaches: regression, evolution, SVM, and ANN on the portfolio optimization problem. For each, a brief description of functionality will be given, some advantages and disadvantages will be discussed. Particular emphasis will be placed on evaluating their applications rather than their technical implementations.
+
+\subsection*{\centering 2.3.1 Linear Regression}
+
+Linear regression is one of the simplest forms of machine learning classifiers. Given an array of datapoints, linear regression tries to optimize an array of weights in order to minimize an error function between these labels. A frequently-used error function is simply the euclidean distance between points. Using this strategy, a hyperplane, simply a $n-1$ dimensional line in $n$-dimension space, is created.
+
+This regression can then be used as a binary classifier where an asset datapoint is a undervalued if it falls below the regression or overvalued if above.  It can easily be extended to autoregression where time series data is used and we can predict future values. In practice, linear regression is used exclusively as a starting point for more complex price prediction strategies because the accuracy is generally lower. It does have the advantage of being simple and easy to interpret.
 
 \begin{center}
-\begin{tabular}{ |c|c|c|c| }
- \hline
- \textbf{Name} & \textbf{Redis} & \textbf{Kafka} & \textbf{RabbitMQ} \\ \hline
- Queues Persistence & In-memory & Persistent & Persistent\\ \hline
- Fault Tolerance & Low & High & High\\ \hline
- Replication & By Queue & By Broker  & By Queue \\ \hline
- Design Complexity & Low & High & Low \\ \hline
- Throughput & Medium & High (network limit) & Medium \\ \hline
- Message Speed & High & Medium (batched) & High \\ \hline 
-\end{tabular}
+\includegraphics[scale=0.5]{linearregression}
+\captionof{figure}{A 2-dimension linear regression [6]}
 \end{center}
-\begin{figure}[h]
-\caption{A comparison between popular messaging queues platforms}
+
+\subsection*{\centering 2.3.2 Support-Vector Machine}
+
+Support-Vector Machines (SVM) are an extension of linear classifier. Like linear regression, they classify data into two classes. Without kernels, SVMs are identical to a linear classifiers. SVM differ from linear regression as they are more extensible. Kernels can added to allow differentiation of non-linear features. Adding these kernels can improve accuracy at the cost of potentially over-fitting the data by finding patterns in the data that don't generalize.
+
+In terms of performance, SVMs are less computationally expensive to compute than neural networks and have been found to outperform in certain studies [5][7]. In addition, it generally takes less data to train. This makes SVMs strong candidates for situations with less data or computational resources are available.
+
+\subsection*{\centering 2.3.3 Artificial Neural Networks}
+
+Artificial Neural Networks (ANN) are the most complex classifier. They take inspiration from biological brains. On a high level, layers of nodes "neurons" are set up feeding into children nodes with different weights and activation levels. Generally the further the layer of node is from the original input data, the smaller the amount of nodes and the more abstract the features are. For example, an early layer node may activate on a high market capitalization and a later layer node may activate construct full portfolios. As with most of these algorithms, there are countless variations that can be tweaked, e.g. binary or continuous activation, connection limitations, feedforward-only etc. increasing performance somewhat. Some variations were found to outperform "buy \& hold" strategies by [5].
+
+\begin{center}
+\includegraphics[scale=0.5]{ANN}
+\captionof{figure}{A sample of three neuron layers, the input layer is the raw data and the output layer is the final result with hidden layers increasing data abstraction. [5]}
+\end{center}
+
+\newpage
+\subsection*{\centering 2.3.4 Evolution Algorithms}
+
+A class of algorithms that is also inspired from nature, this time from biological evolution are evolution algorithms. They can be useful for search problems where a large search space needs to be efficiently explored. Often they are used not as a portfolio-optimizer but as a parameter optimizer for other algorithms like ANNs. They work by starting with an initial generation of parameters and randomly mutate these parameters at each generation with a value function to eliminate generations with lower values, similar to natural selection. In some variations, there is an additional "cooling factor" where later generations vary less than earlier generations as optimality is approached. 
+
+\newpage
+\subsection*{\centering 2.3.5 Comparison of algorithms}
+
+These four algorithm classes are appropriate for certain aspects of the portfolio optimization task. The evolution algorithm is generally used for parameter optimization wheres the other algorithms linear regression, SVM, and ANN are used to optimize portfolio holdings. Given certain constraints of a task, certain tools may be more useful. For example, high-frequency traders might favor SVM given the time-constraints whereas long-term traders may favor ANN for its often higher accuracy.\\
+
+\begin{figure}[H]
+   \centering % center the table
+   \begin{tabular}{ |c|c|c|c| }
+ 	\hline
+ 	\textbf{Model} & \textbf{Implementation Ease} & \textbf{Uses} & \textbf{Performance} \\ \hline
+ 	Linear Regression & Easy & Optimization, Benchmark & Low \\ 	\hline
+ 	Evolution & Easy & Parameter Optimization & Fair \\ \hline
+ 	SVM & Medium & Optimization & High \\ \hline
+ 	ANN & Complex & Optimization & High \\ \hline
+	\end{tabular}
+	\caption{Comparison of popular optimization algorithms for the portfolio optimization task}
 \end{figure}
 
 \newpage\thispagestyle{fancy}\sectionfont{\scshape}
-\section*{2.3 Information Flow}
-\par
-
-The way the system communicates with each of its components is one of particular interest. There are two broad divisions to our table system: the camera capturing component and the displaying component. The camera capturing component is itself composed of a camera cluster, four small computers that control these cameras, and a "handcount" unit: a proximity sensor activated at the start of each new hand when a card is placed on top of it. The display component is composed of two screens and a magnetic reader, used for logging in players and dealers when they swipe their identification cards. Each table also communicates with a central database which handles the image classification, login handling, and log collecting.
-
-To understand the system structure, it is crucial to understand the information being transmitted between the system's components. There are four steps: login, hand start signal, evaluation, and displaying the evaluation. Each step in this process communicates with at least one other consumer or producer and in a strict chronological order.
-
-\begin{enumerate}
-  \item First the player and dealer are logged into the system using a magnetic reader. This produces a message to the screen which then produces a login message to the database. If the database successfully issues the login, the player's credentials are displayed on the screen.
-  
-  \item When a hand is going to start, the handcount unit is activated producing a message to the camera controller consumer. The camera controller then produces to a message to all cameras triggering them to capture images.
-  
-  \item Each of the four cameras then send their images to the server for evaluation.
-  
-  \item The server finally sends the chip amounts for each of the images to the two screens.
-
-\end{enumerate}
-
-This data flow is summarized in the diagram below:
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.50]{system_diagram}
-\caption{A summary of the system where the consumers are in red, the producers are in green, and a combination of both are in yellow. Consumer queues are in blue.}
-\end{figure}
-
-\newpage\thispagestyle{fancy}\sectionfont{\scshape}
-\section*{2.4 Module Abstraction}
-
-\subsection*{2.4.0 Modularity}
-One of the requirements of our system is the ability to easily swap out components tailored to particular clients' needs. For instance, a particular casino can request to have a different database system, such as MySQL (Structured Query Language), instead of our default MongoDB. To accommodate this type of change, we chose to use the object-oriented paradigm with fully virtual classes for most of our classes (3). This model is similar to Java's interface where only function signatures are declared and a separate class implements these methods. \\ \\
-Since our code base is written almost exclusively in Python, we utilized the "abc" module to allow for virtual methods to be declared. This allows the multiple database connectors to inherit from a database connector interface that has high-level functions such "insert\_into\_database" or "fetch\_from\_database". With this code organization, implementing different versions is simply a matter of implementing those methods.
-
-\subsection*{2.4.1 Modules as Message Relays}
-Another property of the system is that each of the many physical components are sufficiently abstracted, such that they can be treated essentially as a consumer and/or producer, without the need to understand how the message is sent. The only knowledge that may change between modules is the message format. Once the message format is known, the consumer doesn't need to concern itself with how it was sent or implemented internally. The message-only communication creates strong distinction between modules, and therefore lowers the coupling of the modules, making it easier to maintain and read each module's code (Warren 4).
-
-\newpage\thispagestyle{fancy}\sectionfont{\scshape}
-\section*{2.5 Message Stability \& Security}
-
-\subsection*{2.5.0 Message Consistency}
-Usually having synchronized messages is not an issue for most of our components, since they are stateless and act completely independently. For example, cameras simply capture image when they receive a capture message. However, for authentication a more sophisticated message handling is needed since there are two components, in this case, the screen and the database. These two components need to have a synchronized state. Having atomic transaction, where either the entire login or logout operation happens, or nothing at all is required to maintain consistency (Niemeyer 5). This is crucial to maintain synchronization. \\ \\
-With our distributed model, implementing a truly atomic authentication transaction is surprisingly complex. To handle the vast majority of cases, the screen should update its status only after receiving a response from the database with whether the authentication was issued or not. With a response from the database, the screen is known to have the login state as the database. In addition to responding to each authentication request a timeout for each message is implemented. For example, the screen updates only on a positive database response if a response is received within the timeout period. This pattern, called a request-reply pattern, is common in web development but less common in messaging queues.
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.55]{communication}
-\caption{The request/reply pattern}
-\end{figure}
-\noindent
-Although this simple model is far better than no response at all, it is not truly transactional, since there are rare cases where the system could enter an inconsistent state. For example, if the screen was to fail after sending a message but before a database response then the screen and database would differ in state. The traditional solutions are either to maintain high uptime, to workaround the issue entirely, or have a central broker to issue transactions (Kaye 6). Given the additional complexity required to have a central broker and the extremely low probability of failure, a fully-transactional system makes only sense in contexts where correctness is mission critical.
-
-\subsection*{2.5.1 Message Security}
-Message security is another important consideration. In particular, a system should ensure that there cannot be a man-in-middle attack where a malicious computer can intercept and potentially modify the message while in transit. RabbitMQ makes it easy to implement Transport Layer Security (TLS) with RSA encryption, the same encryption that is used by websites to encrypt HTTP requests. With this encryption, it is impractical to read any intercepted message because it would take an estimated 6.4 quadrillion years of computing time to crack the 2048 bit RSA (7).
-
-\newpage\thispagestyle{fancy}\sectionfont{\scshape}
-\section*{3.0 Conclusion}
+\section*{\centering 3.0 Conclusion}
 \addcontentsline{toc}{section}{Conclusion}
-\par\indent
-Of the possible methods to relay information from physical components, messaging queues have proven to be a flexible and effective solution. It is fast, secure, and has good object-oriented properties. The drawbacks when it comes to messaging speed and message stability can be worked around. The ability to handle thousands of requests per second across multiple devices can be done with ease.
+\par\noindent
+As all domains increase their dependence on cutting-edge technologies, it's inevitable that the finance domain continues a transition from human to computer decision making. Machine learning has already been applied to customer service and fraud detection, and their scope will inevitable be expanded in the near future. Portfolio optimization is a difficult problem and academia has a mixed-record on their algorithm performance. Still, some algorithms like SVM and ANN can perform better than benchmarks and it's probable that proprietary algorithms perform better still. Even today, traditional traders are slowly been replaced by trading algorithms. The advantages of using software include cutting costs, higher accuracy, and faster evaluation when compared to their human equivalents. \\
+
+\begin{center}
+\includegraphics[scale=0.4]{autotrade}
+\captionof{figure}{All types of trading are increasingly been done by algorithms. [8]}
+\end{center} 
 
  \noindent
 
@@ -261,18 +252,20 @@ Of the possible methods to relay information from physical components, messaging
 % REFERENCES
 %-------------------------------------------------------------------------------
 \newpage
-\section*{4.0 References}
+\section*{\centering 4.0 References}
 \addcontentsline{toc}{section}{References}
 
 \begin{enumerate}
-\item "Google Search Statistics." Google Search Statistics - Internet Live Stats. N.p., n.d. Web. 15 Apr. 2017.
-\item "Documentation." Apache Kafka. N.p., n.d. Web. 15 Apr. 2017.
-\item "RabbitMQ Documentation." RabbitMQ. N.p., n.d. Web. 15 Apr. 2017.
-\item "abc - Abstract Base Classes." abc - Abstract Base Classes - Python 2.7.13 documentation. N.p., n.d. Web. 15 Apr. 2017.
-\item Matthew Warren. "High Cohesion, Loose Coupling." The Bojan's Blog. N.p., 8 Apr. 2015. Web. 15 Apr. 2017.
-\item Niemeyer, Patrick. Learning java. N.p. O'Reilly Media, 2017. Print.
-\item Kaye, Doug. Loosely coupled: the missing pieces of Web services. Marin County, CA: RDS Press, 2003. Print.
-\item "The Math Behind Estimations to Break a 2048-bit Certificate." Just How Strong is 2048-bit SSL Certificate Encryption? N.p., n.d. Web. 15 Apr. 2017.
+\item Faggella, Daniel. "Machine Learning in Finance - Present and Future Applications." TechEmergence, 25 Aug. 2017.
+\item Gartner Analytics. "CRM Strategies and Technologies to Understand, Grow and Manage Customer Experiences", 2 Feb. 2011
+\item Lisboa, P. J. G., et al. Business applications of neural networks: the state-of-the-Art of real-World applications. World Scientific, 2000.
+\item Andersen, Andre et Mikelsen, Stian. "A Novel Algorithmic Trading Framework Applying Evolution and Machine Learning for Portfolio Optimization". Norwegian University of Science and Technology, 2012.
+\item Granger, Clive W.J. Forecasting stock market prices: Lessons
+for forecasters. International Journal of Forecasting, 1992.
+\item Fumo, David. "Linear Regression - Intro To Machine Learning." Medium. Simple AI, 05 Mar. 2017. Web. 16 Dec. 2017.
+\item P Pai, W Hong. Forecasting regional electricity load based on recurrent support vector machines. Electric Power Systems
+Research, June 2005.
+\item "The fast and the furious." The Economist, The Economist Newspaper, 25 Feb. 2012, www.economist.com/node/21547988.
 \end{enumerate}
 
 \end{document}
