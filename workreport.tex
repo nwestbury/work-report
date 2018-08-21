@@ -1,36 +1,29 @@
 \documentclass[12pt]{report}
-\usepackage[a4paper]{geometry}
+\usepackage[a4paper, bottom=1.5in]{geometry}
 \usepackage{fancyhdr}
 \usepackage{lastpage}
 \usepackage{graphicx, wrapfig, subcaption, setspace, booktabs}
 \usepackage[T1]{fontenc}
 \usepackage[font=small, labelfont=bf]{caption}
 \usepackage{fourier}
-\usepackage[protrusion=true, expansion=true]{microtype}
 \usepackage[english]{babel}
 \usepackage{sectsty}
 \usepackage{url, lipsum}
 \usepackage{enumitem}
 \usepackage{float}
+\usepackage{scrextend}
+\usepackage{blindtext}
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{algpseudocode}
+\usepackage{tabularx}
+\usepackage{booktabs}% http://ctan.org/pkg/booktabs
 
+\newcommand{\tabitem}{~~\llap{\textbullet}~~}
 \restylefloat{table}
 \graphicspath{ {img/} }
 \newcommand{\HRule}[1]{\rule{\linewidth}{#1}}
 \renewcommand{\headrulewidth}{0pt}
 \linespread{2}
-
-%-------------------------------------------------------------------------------
-% HEADER & FOOTER
-%-------------------------------------------------------------------------------
-% \pagestyle{fancy}
-% \fancyhf{}
-% \fancyhead[L]{Student ID: 20550430}
-% \fancyhead[R]{University of Waterloo}
-% \fancyfoot[C]{\thepage} % / \pageref{LastPage}
-
-%-------------------------------------------------------------------------------
-% TITLE PAGE
-%-------------------------------------------------------------------------------
 
 \begin{document}
 \begin{titlepage}
@@ -40,20 +33,18 @@
 	\end{center}	
 		\vspace*{\stretch{0.1}}
 	\begin{center}
-		\HRule{0.5pt}
-   		\LARGE \textbf{\uppercase{Introduction to Machine Learning in Finance: Applications \& Implications}}
-   		\HRule{0.5pt}
+   		\LARGE \textbf{\uppercase{Achieving Quality through Automated Software Testing}}
 	\end{center}
 	\vspace*{\stretch{0.1}}
 	\begin{center}
-	   		\normalsize {TD Asset Management\\ Toronto, Ontario}	
+	   		\normalsize {Ultimate Software\\ San Francisco, California}	
 	 
 	\end{center}
 	\vspace*{\stretch{0.1}}
 	\begin{center}
 	   		\normalsize {Prepared by\\
 				Nicholas Westbury\\
-				3B Computer Science\\
+				4A Computer Science\\
 				ID 20550430\\
 	   		 	\today
 	   		 }
@@ -61,71 +52,86 @@
 \end{titlepage}
 
 \newpage\noindent\thispagestyle{empty}
+\linespread{1.2}
 \LARGE\textbf{\uppercase{MEMORANDUM}} \normalsize
-\vspace*{-10px}
+\vspace*{-10pt}
 \begin{singlespacing}\noindent
-\vspace*{-10px}
-To: TDAM Manager\\
-\vspace*{-10px}
-From: Nicholas Westbury\\
-\vspace*{-10px}
-Date: \today\\
-\vspace*{-10px}
-Re: Work Report: Introduction to Machine Learning in Finance \\
+\begin{labeling}{From:\ \ \ \ \ \ \ }
+    \item [To:] Brian B.
+    \item [From:] Nicholas Westbury
+    \item [Date:] \today
+    \item [Re:] Work Report: Achieving Quality Through Automated Software Testing
+\end{labeling}
 \end{singlespacing}
-\HRule{1.5pt}\\
-I have prepared the enclosed report, "Introduction to Machine Learning in Finance: Application \& Implications" for my 3B work report. This is the third of four work reports that the Co-operative Education Program required as part of Co-op degree requirements. As you are aware, my primary duty this work term was to support the portfolio analytics web tool. This report is an exploration of a potentially disruptive technology to this industry.\\ \\ \noindent
-As part of this process, the Faculty of Mathematics requests that you evaluate this report for command of topic and technical content/analysis. Your evaluation will be submitted to the Math Undergrad Office for evaluation. The combined marks determine whether the report will receive credit. \\ \\
+\vspace*{-10pt}
+\HRule{1.5pt}
+\begin{singlespacing}\noindent
+I have prepared the enclosed report, "Achieving Quality through Automated Software Testing" for my fourth and final work report. The report is required by the Co-operative Education Program as part of Co-op degree requirements. \\ \\ \noindent 
+I worked as part of the software development team for Perception, a survey tool that allows employers to get feedback from employees with insights from algorithms that analyze the data using a mix of standard statistical and machine-learning methods. My primary duty this work term was to building features and tests for the Perception application. As the product matures, focus is shifting from feature to stability work. Part of this effort is increased testing, forming the basis for this report. \\ \\ \noindent
+As part of this process, the Faculty of Mathematics requests that you evaluate this report for command of topic and technical content/analysis. Your evaluation will be submitted to the Math Undergrad Office for evaluation. Fifteen percent of the weight is determined by your evaluation, the remainder by the faculty. The combined marks determine whether the report will receive credit. \\ \\
 Thank you for your help in preparing this report,\\ \\ \noindent
+\end{singlespacing}
 \includegraphics[scale=0.55]{signature}
+\linespread{2}
 
 \newpage\thispagestyle{fancy}\sectionfont{\scshape}
-\section*{\centering Table of Contents}
+\section*{Table of Contents}
 \normalsize
 \begin{enumerate}[label={},leftmargin=*,labelsep=2ex]
+	\item Executive Summary \dotfill iv
     \item 1.0 Introduction \dotfill 1
     \item 2.0 Analysis \dotfill 2
-    \item 2.1 Applications \dotfill 2
-      \begin{enumerate}[label*={},leftmargin=*,labelsep=2ex]
-        \item 2.1.1 Customer Service \dotfill 2
-        \item 2.1.2 Fraud Detection \dotfill 3
-        \item 2.1.3 Portfolio Analysis \dotfill 3
-      \end{enumerate}
-    \item 2.2 Active Portfolio Analysis \dotfill 5
     \begin{enumerate}[label*={},leftmargin=*,labelsep=2ex]
-    	\item 2.2.1 Is portfolio optimization even possible? \dotfill 5
-    \end{enumerate}
-   	\item 2.3 Comparison of Algorithmic Methods \dotfill 6
-    \begin{enumerate}[label*={},leftmargin=*,labelsep=2ex]
-        \item 2.3.1 Linear Regression \dotfill 7
-        \item 2.3.2 Support-Vector Machine \dotfill 8
-        \item 2.3.3 Neural Network \dotfill 9
-        \item 2.3.4 Evolution Algorithms \dotfill 10
-      	\item 2.3.5 Summary of comparisons \dotfill 11
+    	\item 2.1 Theory \dotfill 2
+      	\begin{enumerate}[label*={},leftmargin=*,labelsep=2ex]
+        	\item 2.1.1 Motivation \dotfill 2
+        	\item 2.1.2 Why Testing is Difficult \dotfill 2
+      	\end{enumerate}
+      	\item 2.2 Types \dotfill 2
+      	\begin{enumerate}[label*={},leftmargin=*,labelsep=2ex]
+        	\item 2.2.1 White-Box Testing \dotfill 2
+        	\item 2.2.2 Black-Box Testing \dotfill 2
+      	\end{enumerate}
+      	\item 2.3 Testing Levels \dotfill 3
+      	\begin{enumerate}[label*={},leftmargin=*,labelsep=2ex]
+        	\item 2.3.1 Unit Testing \dotfill 2
+        	\item 2.3.2 Integration Testing \dotfill 2
+        	\item 2.3.3 System Testing \dotfill 2
+        	\item 2.3.4 Acceptance Testing \dotfill 2
+      	\end{enumerate}
+      	\item 2.4 Practical Implantation \dotfill 3
     \end{enumerate}
     \item 3.0 Conclusion \dotfill 12
-    \item 4.0 References \dotfill 13
+    \item References \dotfill 13
 \end{enumerate}
 \fancyfoot[C]{ii}
 
 \newpage\thispagestyle{fancy}\sectionfont{\scshape}
-\section*{\centering List of Figures}
+\section*{List of Figures}
 \normalsize\cfoot{3aa}
-\begin{enumerate}[label=\arabic*,leftmargin=*,labelsep=2ex,ref=\arabic*]
-    \item Linear Regression Graph \dotfill 8
-    \item Neural Network Nodes \dotfill 9
-    \item Comparison Table \dotfill 11
-    \item Algorithm Adoption Graph \dotfill 12
+\begin{enumerate}[label*={},leftmargin=*,labelsep=2ex,ref=\arabic*]
+    \item Figure 1 --- Exponential Defect Cost Graph \dotfill 3
+    \item Figure 2 --- Angular/Jasmine/Karma Logos \dotfill 9
+
 \end{enumerate}
+
+\section*{List of Tables}
+\normalsize\cfoot{3aa}
+\begin{enumerate}[label*={},leftmargin=*,labelsep=2ex,ref=\arabic*]
+    \item Table 1 --- Unit Testing Pros and Cons \dotfill 7
+    \item Table 2 --- Integration Testing Pros and Cons \dotfill 7
+
+\end{enumerate}
+
 
 \fancyfoot[C]{iii}
 
 \newpage\thispagestyle{fancy}\sectionfont{\scshape}
-\section*{\centering Executive Summary}
+\section*{Executive Summary}
 
-This report looks at the potential applications, both present and future, of machine learning in finance. It explores deeper the particular task of portfolio optimization. It considers four algorithms: linear regression, evolution, support-vector machine, and neural networks for the portfolio optimization task and gives a high-level overview of their functionality, comparing some of their advantages and disadvantages.
-
-After reading this report, the reader should have a basic understanding of what machine learning is, how some particular algorithms work, and some of the considerations that goes into developing tools to solve this particular task such as the type of data used and how data is classified from the raw input data. In conclusion, you'll understand the importance of machine learning and why their adoption has been trending upwards.
+This reports starts looking at the theoretical motivation and objectives of testing and then considers some practical testing methods to attain these objectives. It will talk about the advantages, disadvantages, and trade-offs of a variety of testing approaches and explains the consideration that goes into creating a broader company-wide testing strategy.
+\\ \\ \noindent 
+After reading this report, the reader should understand why testing is important, why it's impossible to have perfect testing, and be introduced to different classes of tests. Ultimately, the take-away will be to know why certain testing methods are acceptable for a given application.
 
 \fancyfoot[C]{iv}
 
@@ -139,112 +145,169 @@ After reading this report, the reader should have a basic understanding of what 
 \setcounter{page}{1}
 \fancyfoot[C]{\thepage}
 
-\section*{\centering 1.0 Introduction: What is Machine Learning?}
+\section*{1.0 Introduction}
 \addcontentsline{toc}{section}{Introduction}
 \par\indent
-Quantitative data has always been a core pillar of the finance industry. From hedge funds using a variety of numeric indicators to predict an economy's health to accountants calculating companies' output, the finance industry has been intrinsically linked with numbers. Traditionally, human workers have manually used these numbers to inform their decisions, such as whether to buy or sell an asset or the amount of risk to take. Given the ever-increasing quantity of data, making good decisions is a difficult task. The sector is therefore a natural target for applying algorithms to systemically organize and analyze information.
-\\ \par\noindent
-One relatively recent advancement in algorithmic analysis has been labeled "Machine Learning". In short, machine learning the application of statistical and optimization methods to recognize and learn from patterns in data. Algorithms can range dramatically in sophistication from linear regression, classifying data based on if it falls above or below a threshold, to neural networks, layers of nodes that each learn about increasingly abstract features of the data. This class of algorithms have a plethora of applications in all fields, but especially those dealing with quantification like finance. This report will explore some of the current applications, particularly stock analysis, and future implications of computational learning.
+Software testing has always been a core pillar of building reliable computer programs. At its core, software testing it is simply running a program and determining if the output is the expected behaviour based on requirements. It is composed of several linked activities: verifying software matches agreed-upon specifications, verifying software completeness, identifying defects in software that can take the form of feature, usability, or performance bugs [1]. As computer applications take an ever-growing roles in our lives, reliability is crucial. \\ \par\noindent
+The purpose of the report is to inform on a high-level about the why, what, and how of software testing. It will start by elaborating on why testing is important, background theory on different testing methods, and will be followed by some practical applications of these testing methods.
 
 \newpage\thispagestyle{fancy}\sectionfont{\scshape}
-\section*{\centering 2.0 Analysis}
-\subsection*{\centering 2.1 Applications}
+\section*{2.0 Analysis}
+\subsection*{2.1 Theory}
 \noindent
-There are variety of algorithm applications within the finance industry that offer considerable advantages over their human counterparts. Customer service, fraud detection, and portfolio-analysis are three of the primary which have been adopting machine learning techniques [1].
-
-\subsection*{\centering 2.1.1 Customer Service}
+ Although software testing has traditionally been seen as after-thought especially in startups that prioritize shipping features before worrying about stability, it is important to reduce programming bugs, have happier customers, and make more money. 
+\subsection*{2.1.1 Motivation: Cost}
 \par\indent
-One of the most promising applications of deep learning is in customer service. In particular, answering customers questions on a variety of topics can be highly automated. Chatbots, where customers ask questions that are processed in real-time and answered by an algorithm, are becoming increasingly accurate and popular. Questions like "what is my account balance" or "how to I open a TFSA" that would traditionally be answered by a bank teller can now be instead answered by a web service. The advantages are obvious; to the banks, they lower dependence on physical branches saving money on staff. To the customers, their questions are answered faster, more conveniently, and potentially more accurately. In the future, this will have an even greater presence. Gartner analytics predicts that 85\% of banking will happen through electronic means by 2020 [2].
-
-\newpage\thispagestyle{fancy}\sectionfont{\scshape}
-\subsection*{\centering 2.1.2 Fraud Detection}
-\addcontentsline{toc}{section}{Introduction}
-\par\indent
-A second application where banks have already applied traditional algorithms for years is fraud detection. This is an important problem because despite only approximately 0.1\% of transactions being fraudulent, hundreds of millions of dollars are still lost to fraud every year [3].  In the recent past, credit card companies and other financial institutions set explicit flags to detect potentially suspicious activity, factors such as location and amount spend, which are often good potential indicators of fraud. Due to such low occurrences though, these methods are susceptible to false positives, when fraud is incorrect detected. Recently, more sophisticated machine learning algorithms can find correlations between transaction metrics that a hard-coded set of rules in flagging algorithms would miss and put less weight to less important factors. For example, a machine learning algorithm might find the frequency and location of transactions should be weighted as more important factors than amount and purchase type.
-
-
-\subsection*{\centering 2.1.3 Portfolio Analysis}
-\par\indent
-A third popular application is to use machine learning algorithms to analyze portfolios. Different portfolios have different objectives from maximizing short-term returns to minimizing long-term risks. These types of optimization problems are well-suited for applying machine learning algorithms since the value function, return on investment, is clear. There is a considerable range of sophistication. The simplest form is closer to a passive investment strategy, where an algorithm allocates different a diversity of asset classes (e.g. stocks, bonds, currencies) based on risk tolerance. This is what popular robo-investing website like Wealthsimple, a Toronto start-up, offer because it minimizes risk.
-\par\noindent \\
-In addition to the passive investment strategy, algorithmic active asset selection is possible. These use financial metrics of an asset, such as earning per share, to evaluate whether an asset is under or overvalued and make trades based on these evaluations. Time-series analysis methods, where these metrics change over time is a common approach. Furthermore, algorithms can also be to take into account more abstract data such as sentiment analysis. Mentions of a particular the company in online articles or social media websites are analyzed to find the mood which people are talking about an asset or the overall economy. For example, if mentions generally use positive words when talking about an asset, it may be a good indicator that people are confident in the company. The remainder of this report will concentrate on explaining and comparing some of these algorithms.
-
-\section*{\centering 2.2 Active Portfolio Analysis}
-\subsection*{\centering 2.2.1 Is portfolio optimization even possible? }
-
-Ever since financial markets where created, traders have been trying to find an edge to give them an advantage over others. Machine learning is just the latest iteration. There is a legitimate question of whether or not computational methods have good predictive power.
+The most easily measurable cost are the direct financial costs associated with software bugs. According to Tricentis, the cost was a staggering 1.1 trillion dollars in 2016 alone [2]. This figure includes direct expenses such as engineering costs to fix the bugs, the cost to customers being unable or impeded to use the product. Less frequently thought-about costs include the impact on the company's brand, customer loyalty, and level of annoyance customers report. 
 \par\noindent
-One one hand, academia has consistently found that algorithms where generally on par with their benchmarks (generally a buy-and-hold strategy) [4][5]. This may suggest that either the data has weak predictive power or the market is "efficient", meaning it strongly reflects the data and therefore profit opportunities are marginal. Another reason the portfolio optimization problem is unsolved is that real-world data is imperfect, it can be expensive to access high-quality stock data for example, and even then accuracy will often be low.
-
-On the other hand, as Clive Granger from the University of California points out there is a "possible reporting bias - if a method of forecasting found an academic might prefer to profit from it
-rather than publish" [5]. To further support this point, Two Sigma and Renaissance, two of the world's largest hedge funds, actively employ data scientists. This type of hiring implies there is some value generation possible. Given the right tools, it is likely possible to take advantage of obscure patterns in data that the general investing public cannot.
-
-\subsection*{\centering 2.2.2 Types of data}
-For all machine learning methods, understanding the types of information available is particularly important. In finance, we have several types of data that is feed as input to the portfolio optimization algorithm: technical data, fundamental data, economic data, and sentimental data. Technical data refers to pricing data and related ratios like moving average price. Fundamental data refers to financial number generally released in quarterly reports such as earnings per share.  Economic data refers to economy-wide numbers like employment percentage which can reflect on individual companies. Finally there is sentimental data, this is generally collected from news articles or social media that relate a company to positive or negative emotions. Technical, fundamental, and economic data are the most commonly used due to its relatively-easy access. Pricing data is frequently updated making it a useful for machine learning application that require large amounts of data. Other types of data like fundamental data generally has more predictive power. The majority of portfolio analysis uses a time series analysis with technical data supplemented with other types of data.
-
-\subsection*{\centering 2.3 Comparison of Algorithmic Methods}
-
-We will consider a few different algorithmic approaches: regression, evolution, SVM, and ANN on the portfolio optimization problem. For each, a brief description of functionality will be given, some advantages and disadvantages will be discussed. Particular emphasis will be placed on evaluating their applications rather than their technical implementations.
-
-\subsection*{\centering 2.3.1 Linear Regression}
-
-Linear regression is one of the simplest forms of machine learning classifiers. Given an array of datapoints, linear regression tries to optimize an array of weights in order to minimize an error function between these labels. A frequently-used error function is simply the euclidean distance between points. Using this strategy, a hyperplane, simply a $n-1$ dimensional line in $n$-dimension space, is created.
-
-This regression can then be used as a binary classifier where an asset datapoint is a undervalued if it falls below the regression or overvalued if above.  It can easily be extended to autoregression where time series data is used and we can predict future values. In practice, linear regression is used exclusively as a starting point for more complex price prediction strategies because the accuracy is generally lower. It does have the advantage of being simple and easy to interpret.
+Moreover, the later a bug is found and repaired, the more expensive it is to fix. A 2008 IBM report found that after a bug makes its way through the design, implementation, testing, customer beta test and finally post-production release, it is roughly 30 times more expensive compared to finding it during the design phase [3]. The earlier throughout testing is done, the cheaper it is. The next figure illustrates the exponential cost nature of defect the later it is found in the development process. 
 
 \begin{center}
-\includegraphics[scale=0.5]{linearregression}
-\captionof{figure}{A 2-dimension linear regression [6]}
+\includegraphics[scale=0.7]{cost-test}
+\captionof{figure}{The cost of fixing a bug increases dramatically the later it is caught in development. [4]}
 \end{center}
+\par\noindent
+In extreme cases, the costs are staggering. A high-profile case was Mariner 1, a 1962 NASA spacecraft with destination to Venus. Shortly after takeoff, it veered off course due to a software bug and \$18 million was lost [5]. Amazon Web Services went down for 4 hours causing nearly \$50 million dollars in lost revenue [6]. A software bug in the Therac-25 radiation machine caused larger-than-required dosage to be sent causing at least 3 deaths [7]. These examples are outliers, with thousands of smaller cases of bugs causing unexpected and expensive incorrect behaviour but they illustrate the need for software testing.
 
-\subsection*{\centering 2.3.2 Support-Vector Machine}
+\subsection*{2.1.2 Motivation: Customer Happiness}
+\par\noindent
+Another common motivating factor is that better testing leads to happier customers. It is hard to measure customer happiness objectively but Medrad, a medical imaging equipment manufacturer, saw an annual revenue growth of 15\% for four years, which it attributed to instituting a quality assurance (QA) program. Similarly, Johnson Controls, an automobile company, found as part of their QA efforts that every 1\% increase in customer satisfaction lead to a \$13 million positive impact on their bottom line [8].
 
-Support-Vector Machines (SVM) are an extension of linear classifier. Like linear regression, they classify data into two classes. Without kernels, SVMs are identical to a linear classifiers. SVM differ from linear regression as they are more extensible. Kernels can added to allow differentiation of non-linear features. Adding these kernels can improve accuracy at the cost of potentially over-fitting the data by finding patterns in the data that don't generalize.
+\subsection*{2.1.2 Why Testing is Difficult}
+\addcontentsline{toc}{section}{Introduction}
+\par\noindent
+Given that testing has benefits on both the company's bottom line and customer satisfaction, the natural question arises: why don't all software companies treat testing as a high priority? One reason is that testing is difficult. Even well-meaning companies that are willing to invest in QA might be afraid of the complexity.
+\par\indent \\
+To illustrate this point, consider the following simple pusedo-code:
 
-In terms of performance, SVMs are less computationally expensive to compute than neural networks and have been found to outperform in certain studies [5][7]. In addition, it generally takes less data to train. This makes SVMs strong candidates for situations with less data or computational resources are available.
+\begin{algorithm}
+	\caption{Simple Divison}
+	\begin{algorithmic}
+	
+	\Function{divide}{a, b}
+	  \State \Return a / b
+	\EndFunction
+	\end{algorithmic}
+\end{algorithm}
 
-\subsection*{\centering 2.3.3 Artificial Neural Networks}
+\par\noindent
+The number of aspects there is to analyze for test purposes is virtually limitless. For the snippet above, a type-conscience programmer might ask what types are $a$ and $b$ expected to be? Are they integers, floating-point numbers, or could they even be complex types like imaginary numbers or could $a$ be an array and $b$ an integer? Are these considerations that we should test for or these assumptions fair to make given the domain of the system? Do we need to test for every combination of number or is it sufficient to test certain edge cases?\\
 
-Artificial Neural Networks (ANN) are the most complex classifier. They take inspiration from biological brains. On a high level, layers of nodes "neurons" are set up feeding into children nodes with different weights and activation levels. Generally the further the layer of node is from the original input data, the smaller the amount of nodes and the more abstract the features are. For example, an early layer node may activate on a high market capitalization and a later layer node may activate construct full portfolios. As with most of these algorithms, there are countless variations that can be tweaked, e.g. binary or continuous activation, connection limitations, feedforward-only etc. increasing performance somewhat. Some variations were found to outperform "buy \& hold" strategies by [5].
+\par\noindent
+Language-specific considerations also need to be taken into taken. For example, python2 and C (with integers) will return $1 / 2 = 0$ but python3 will do float division with integers so $1 / 2 = 0.5$. A computer scientist might also point out edge cases when the result exceeds the $[-2^{31}, 2^{31}-1]$ range for 32-bit signed integers leading to under/overflow. Finally a mathematician mind might ask what would happen for the cases $a/0$, $0/0$. The amount of knowledge and proper discretion required to test even trivial functions is surprising.
+
+\section*{2.2 Types}
+
+Traditionally, testing can be divided into two large categories: white and black box testing. White-box testing refers to testing when the implementation is known whereas black-box testing is testing where the code is unknown and product-behaviour testing is done. Each category can be further sub-divided into more specific categories.
+
+\subsection*{2.2.1 White-box Testing}
+\par\noindent
+White-box includes any tests where the implementation is known to the developer. It is usually done at the unit phase. White-box testing has some advantages and disadvantages compared to black-box testing.
+
+\par\noindent
+Generally white-box tests are more throughout than black-box since developers can put emphasis on more complex sections of the code. For similar reasons, performance issues can be identified here. Automating the tests is easier when the implementation is known.
+
+\par\noindent
+There are downsides too. For one, only a programmer is able to write tests. The number of inputs can frequently be to high to test accurately. White-box testing also has bias to the existing code-base and will fail to find shortcomings in already-present behaviour.
+
+
+\subsection*{2.2.2 Black-box Testing}
+\par\noindent
+Black-box is roughly the opposite of white-box testing. A tester knows \textit{what} the software should do but not \textit{how} it does it. It has the benefit of being able to be tested by anyone even without particular programming knowledge. They are closer to the product specification.
+
+\section*{2.3 Testing Phases}
+\par\noindent
+Different phases of testing are appropriate for different degrees of specificity of a software testing. Each has its advantages and drawbacks and therefore the phases are often combined as part of a testing strategy.\\
+
+\subsection*{2.3.1 Unit Testing}
+\par\noindent
+Unit tests code on a functional-level. Generally they are written to ensure function-level behaviour is correct. A unit test minimally verify every branches of logic and test the most complex or edge cases. Unit testing is indented to be used along with other testing method to complete a full testing strategy.
+
+\begin{table}[ht]
+\begin{tabularx}{\linewidth}{>{\parskip1ex}X@{\kern4\tabcolsep}>{\parskip1ex}X}
+\toprule
+\hfil\bfseries Pros & \hfil\bfseries Cons
+\\\cmidrule(r{3\tabcolsep}){1-1}\cmidrule(l{-\tabcolsep}){2-2}
+
+%% PROS, seperated by empty line or \par
+$\bullet$ Simple to write\par
+$\bullet$ Can be written independently of other code\par
+$\bullet$ Serve as specification to other developers by giving concrete examples on how to use a particular function\par
+
+&
+
+%% CONS, seperated by empty line or \par
+$\bullet$ Misleading code coverage because 100\% unit test coverage doesn't correspond to complete test coverage \par
+$\bullet$ Doesn't cover interaction between components \par
+
+\\\bottomrule
+\end{tabularx}
+\caption{Unit testing pros and cons}
+\end{table}
+\vspace{-10pt}
+\subsection*{2.3.2 Integration Testing}
+\par\noindent
+Integration testing tests interaction between individual components with respect to a software specification. It combines unit-tested modules and tests the interaction between them.
+
+\begin{table}[ht]
+\begin{tabularx}{\linewidth}{>{\parskip1ex}X@{\kern4\tabcolsep}>{\parskip1ex}X}
+\toprule
+\hfil\bfseries Pros & \hfil\bfseries Cons
+\\\cmidrule(r{3\tabcolsep}){1-1}\cmidrule(l{-\tabcolsep}){2-2}
+
+%% PROS, seperated by empty line or \par
+$\bullet$ Closer to testing the application with user requirements 
+
+&
+
+%% CONS, seperated by empty line or \par
+$\bullet$ Can be challenging to separate unit-test into integration tests    dependent on code structure
+$\bullet$ Not as easy to trace-down mistakes compared to unit tests
+
+\\\bottomrule
+\end{tabularx}
+\caption{Integration testing pros and cons}
+\end{table}
+
+\subsection*{2.3.3 System Testing}
+\par\noindent
+System testing is a class of black-box testing where the program requirements are tested based on the product requirements. System testing is done on the completed overall system.
+
+\subsection*{2.3.4 Acceptance Testing}
+\par\noindent
+The final testing phase is done by real users. It will be the most accurate test because it tests them in real environments. It is often the last step before a product release.
+
+
+\section*{2.4 Sample Practical Implementation}
+\par\noindent
+At work, our testing stack consists of a few different technologies. The primary technologies are Jasmine/Karma for client-side testing, Frisby for API testing, nosetests for python unit testing, and Selenium for integration tests. The choice of these particular technologies is specific to our software stack but is illustrative of a well-rounded testing strategy.
+
+\par\noindent
+Jasmine and Karma are the testing framework and test runner that allow for unit-testing JavaScript code. We have framework-specific testing to allow Angular modules to be broken down into their natural components: controllers, services, and directives. These are akin to classes in object-oriented languages. Testing these components as a unit instead of individual function has the advantage that they are often closely coupled and directly dependent on another, making the testing closer to what is being run. One frustration is that these unit test approach to integration tests because of the obligation to "mock" data in order to run dependent functions.
 
 \begin{center}
-\includegraphics[scale=0.5]{ANN}
-\captionof{figure}{A sample of three neuron layers, the input layer is the raw data and the output layer is the final result with hidden layers increasing data abstraction. [5]}
+\includegraphics[scale=0.4]{karma}
+\captionof{figure}{Angular/Jasmine/Karma is a popular testing stack for frontend testing. [9]}
 \end{center}
 
-\newpage
-\subsection*{\centering 2.3.4 Evolution Algorithms}
+\par\noindent
+Python nosetests are similar to Jasmine and Karma unit tests but for the backend instead of the frontend. They are divided from each individual file into the three divisions of our server code: gateways, service, and endpoints. Python has a mature first-party testing framework and generally accomplishes the theoretical goals of unit tests to be discrete, independent, and complete. Nonetheless, one downside is the automated tests for database communication is lengthy because each unit tests clears the database.
 
-A class of algorithms that is also inspired from nature, this time from biological evolution are evolution algorithms. They can be useful for search problems where a large search space needs to be efficiently explored. Often they are used not as a portfolio-optimizer but as a parameter optimizer for other algorithms like ANNs. They work by starting with an initial generation of parameters and randomly mutate these parameters at each generation with a value function to eliminate generations with lower values, similar to natural selection. In some variations, there is an additional "cooling factor" where later generations vary less than earlier generations as optimality is approached. 
+\par\noindent
+Frisby is used for integration testing. It allows for HTTP requests to be made to different endpoint. For example, a test case could be to create a question and add it to a survey using the (\texttt{/api/create\_survey} and \texttt{/api/add\_survey\_question/1} endpoints). It fills it purpose to test the endpoint integration.
 
-\newpage
-\subsection*{\centering 2.3.5 Comparison of algorithms}
 
-These four algorithm classes are appropriate for certain aspects of the portfolio optimization task. The evolution algorithm is generally used for parameter optimization wheres the other algorithms linear regression, SVM, and ANN are used to optimize portfolio holdings. Given certain constraints of a task, certain tools may be more useful. For example, high-frequency traders might favor SVM given the time-constraints whereas long-term traders may favor ANN for its often higher accuracy.\\
+\par\noindent
+Finally, there is Selenium which is a web browser automation tool. It allows for a realistic recreation of how the client would see and use the website. As such it can be considered a hybrid of integration and system testing. It allows for nearly arbitrary complex tests but the downside it is considerable more difficult to write, and often more brittle than than other testing technologies. For example, a graphical overhaul would require re-writing Selenium.
 
-\begin{figure}[H]
-   \centering % center the table
-   \begin{tabular}{ |c|c|c|c| }
- 	\hline
- 	\textbf{Model} & \textbf{Implementation Ease} & \textbf{Uses} & \textbf{Performance} \\ \hline
- 	Linear Regression & Easy & Optimization, Benchmark & Low \\ 	\hline
- 	Evolution & Easy & Parameter Optimization & Fair \\ \hline
- 	SVM & Medium & Optimization & High \\ \hline
- 	ANN & Complex & Optimization & High \\ \hline
-	\end{tabular}
-	\caption{Comparison of popular optimization algorithms for the portfolio optimization task}
-\end{figure}
+\par\noindent
+Each of these technologies has their limitations but together they cover the full-spectrum of tests. Karma/Jasmine cover the frontend. Frisby/Nosetests cover the backend. Selenium acts as the bridge between them. The figure below visually illustrates where each technology fits in the overall testing strategy.
 
 \newpage\thispagestyle{fancy}\sectionfont{\scshape}
-\section*{\centering 3.0 Conclusion}
+\section*{3.0 Conclusion}
 \addcontentsline{toc}{section}{Conclusion}
 \par\noindent
-As all domains increase their dependence on cutting-edge technologies, it's inevitable that the finance domain continues a transition from human to computer decision making. Machine learning has already been applied to customer service and fraud detection, and their scope will inevitable be expanded in the near future. Portfolio optimization is a difficult problem and academia has a mixed-record on their algorithm performance. Still, some algorithms like SVM and ANN can perform better than benchmarks and it's probable that proprietary algorithms perform better still. Even today, traditional traders are slowly been replaced by trading algorithms. The advantages of using software include cutting costs, higher accuracy, and faster evaluation when compared to their human equivalents. \\
-
-\begin{center}
-\includegraphics[scale=0.4]{autotrade}
-\captionof{figure}{All types of trading are increasingly been done by algorithms. [8]}
-\end{center} 
+As our product matures, stability has increased importance and so has the dependence on making full-fledged automated tests. Increasing testing reduces the odds of a disaster, increases customer satisfaction, and is correlated with increased revenues. Though perfect testing is impossible, the stand unit, integration, system, and acceptance testing pipeline is an effective way of having practical and useful tests. The explanation of our application of this theoretical modal on practical product testing should reinforce some of the strengths and weaknesses in the real-world.
 
  \noindent
 
@@ -252,20 +315,29 @@ As all domains increase their dependence on cutting-edge technologies, it's inev
 % REFERENCES
 %-------------------------------------------------------------------------------
 \newpage
-\section*{\centering 4.0 References}
+\section*{References}
 \addcontentsline{toc}{section}{References}
 
+\small
 \begin{enumerate}
-\item Faggella, Daniel. "Machine Learning in Finance - Present and Future Applications." TechEmergence, 25 Aug. 2017.
-\item Gartner Analytics. "CRM Strategies and Technologies to Understand, Grow and Manage Customer Experiences", 2 Feb. 2011
-\item Lisboa, P. J. G., et al. Business applications of neural networks: the state-of-the-Art of real-World applications. World Scientific, 2000.
-\item Andersen, Andre et Mikelsen, Stian. "A Novel Algorithmic Trading Framework Applying Evolution and Machine Learning for Portfolio Optimization". Norwegian University of Science and Technology, 2012.
-\item Granger, Clive W.J. Forecasting stock market prices: Lessons
-for forecasters. International Journal of Forecasting, 1992.
-\item Fumo, David. "Linear Regression - Intro To Machine Learning." Medium. Simple AI, 05 Mar. 2017. Web. 16 Dec. 2017.
-\item P Pai, W Hong. Forecasting regional electricity load based on recurrent support vector machines. Electric Power Systems
-Research, June 2005.
-\item "The fast and the furious." The Economist, The Economist Newspaper, 25 Feb. 2012, www.economist.com/node/21547988.
+\item Pan, Jiantao. "Software Testing". Carnegie Mellon University, Spring 1999.st Newspaper, 25 Feb. 2012, https://users.ece.cmu.edu/\~koopman/des\_s99/sw\_testing/.
+
+\item Tricentis. "Software Fail Watch: 2016 in Review". Tricentis, 2016. https://www.tricentis.com/resource-assets/software-fail-watch-2016/
+
+\item International Business Machines. "Minimizing code defects to improve software quality and lower development costs", Oct. 2008. ftp://ftp.software.ibm.com/software/rational/info/do-more/RAW14109USEN.pdf
+
+\item Manna, Antonella. "An Introduction to Testing in Production". Belatrix, 18 Aug. 2016. http://www.belatrixsf.com/blog/an-introduction-to-testing-in-production/
+
+\item National Aeronautics and Space Administration (NASA). "Mariner 1", 2018. https://nssdc.gsfc.nasa.gov/nmc/spacecraftDisplay.do?id=MARIN1
+
+\item Weise, Elizabeth. "Massive Amazon cloud service outage disrupts sites"
+https://www.usatoday.com/story/tech/news/2017/02/28/amazons-cloud-service-goes-down-sites-scramble/98530914/
+
+\item Levson, Nacy. "Medical Devices: The Therac-25". University of Washington, 1995. http://sunnyday.mit.edu/papers/therac.pdf
+
+\item Turner, Jamie. "How Quality Impacts Your Bottom Line". SmartBear, 11 Apr. 2013. https://smartbear.com/blog/test-and-monitor/how-quality-impacts-your-bottom-line/
+
+\item Rosa, Santiago. "Angular: Unit Testing Jasmine, Karma". 30 Nov. 2017. https://medium.com/frontend-fun/angular-unit-testing-jasmine-karma-step-by-step-e3376d110ab4
 \end{enumerate}
 
 \end{document}
