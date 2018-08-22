@@ -67,7 +67,7 @@
 \HRule{1.5pt}
 \begin{singlespacing}\noindent
 I have prepared the enclosed report, "Achieving Quality through Automated Software Testing" for my fourth and final work report. The report is required by the Co-operative Education Program as part of Co-op degree requirements. \\ \\ \noindent 
-I worked as part of the software development team for Perception, a survey tool that allows employers to get feedback from employees with insights from algorithms that analyze the data using a mix of standard statistical and machine-learning methods. My primary duty this work term was to building features and tests for the Perception application. As the product matures, focus is shifting from feature to stability work. Part of this effort is increased testing, forming the basis for this report. \\ \\ \noindent
+As you know, I worked as part of the software development team for Perception, a survey tool that allows employers to get feedback and insights from algorithms that analyze the employee survey data using a mix of standard statistical and machine-learning methods. My primary duty this work term was to build features and tests for the Perception web application. As the product matures, focus is shifting from feature to stability work. Part of this effort is increased testing, forming the basis for this report. \\ \\ \noindent
 As part of this process, the Faculty of Mathematics requests that you evaluate this report for command of topic and technical content/analysis. Your evaluation will be submitted to the Math Undergrad Office for evaluation. Fifteen percent of the weight is determined by your evaluation, the remainder by the faculty. The combined marks determine whether the report will receive credit. \\ \\
 Thank you for your help in preparing this report,\\ \\ \noindent
 \end{singlespacing}
@@ -112,14 +112,14 @@ Thank you for your help in preparing this report,\\ \\ \noindent
 \begin{enumerate}[label*={},leftmargin=*,labelsep=2ex,ref=\arabic*]
     \item Figure 1 --- Exponential Defect Cost Graph \dotfill 3
     \item Figure 2 --- Angular/Jasmine/Karma Logos \dotfill 9
-
+	\item Figure 3 --- Current Testing Infrastructure \dotfill 10
 \end{enumerate}
 
 \section*{List of Tables}
 \normalsize\cfoot{3aa}
 \begin{enumerate}[label*={},leftmargin=*,labelsep=2ex,ref=\arabic*]
     \item Table 1 --- Unit Testing Pros and Cons \dotfill 7
-    \item Table 2 --- Integration Testing Pros and Cons \dotfill 7
+    \item Table 2 --- Integration Testing Pros and Cons \dotfill 8
 
 \end{enumerate}
 
@@ -129,9 +129,7 @@ Thank you for your help in preparing this report,\\ \\ \noindent
 \newpage\thispagestyle{fancy}\sectionfont{\scshape}
 \section*{Executive Summary}
 
-This reports starts looking at the theoretical motivation and objectives of testing and then considers some practical testing methods to attain these objectives. It will talk about the advantages, disadvantages, and trade-offs of a variety of testing approaches and explains the consideration that goes into creating a broader company-wide testing strategy.
-\\ \\ \noindent 
-After reading this report, the reader should understand why testing is important, why it's impossible to have perfect testing, and be introduced to different classes of tests. Ultimately, the take-away will be to know why certain testing methods are acceptable for a given application.
+This reports starts by looking at the theoretical motivation and objectives of testing and then considers some practical testing methods to attain these objectives. It will talk about the advantages, disadvantages, and trade-offs of a variety of testing approaches and explains some of the considerations that goes into creating a broader company-wide testing strategy. After reading this report, the reader should understand why testing is important, why perfect testing is impossible, and be introduced to different classes of tests. Ultimately, the take-away will be understand the basis for testing and a sample implementation of this basis.
 
 \fancyfoot[C]{iv}
 
@@ -148,30 +146,30 @@ After reading this report, the reader should understand why testing is important
 \section*{1.0 Introduction}
 \addcontentsline{toc}{section}{Introduction}
 \par\indent
-Software testing has always been a core pillar of building reliable computer programs. At its core, software testing it is simply running a program and determining if the output is the expected behaviour based on requirements. It is composed of several linked activities: verifying software matches agreed-upon specifications, verifying software completeness, identifying defects in software that can take the form of feature, usability, or performance bugs [1]. As computer applications take an ever-growing roles in our lives, reliability is crucial. \\ \par\noindent
-The purpose of the report is to inform on a high-level about the why, what, and how of software testing. It will start by elaborating on why testing is important, background theory on different testing methods, and will be followed by some practical applications of these testing methods.
+Software testing has always been a core pillar of building reliable computer programs. At its core, software testing it is simply running a program and determining if the output is the expected behaviour based on requirements. It is composed of several linked activities: verifying software matches agreed-upon specifications, verifying software completeness, identifying defects in software that can take the form of feature, usability, or performance bugs [1]. As computer applications take an ever-growing roles in our lives, reliability and quality is crucial. \\ \par\noindent
+The purpose of the report is to inform on a high-level about the why, what, and how of software testing. It will start by elaborating on why testing is important, background theory on different testing methods, and end with a sample practical application of these testing methods.
 
 \newpage\thispagestyle{fancy}\sectionfont{\scshape}
 \section*{2.0 Analysis}
 \subsection*{2.1 Theory}
 \noindent
- Although software testing has traditionally been seen as after-thought especially in startups that prioritize shipping features before worrying about stability, it is important to reduce programming bugs, have happier customers, and make more money. 
+Software testing has traditionally been seen as after-thought for startups that prioritize shipping features before worrying about stability. Nonetheless, in the long term, it is important to reduce programming bugs thereby increasing quality, leading to happier customers and more revenue. 
 \subsection*{2.1.1 Motivation: Cost}
 \par\indent
-The most easily measurable cost are the direct financial costs associated with software bugs. According to Tricentis, the cost was a staggering 1.1 trillion dollars in 2016 alone [2]. This figure includes direct expenses such as engineering costs to fix the bugs, the cost to customers being unable or impeded to use the product. Less frequently thought-about costs include the impact on the company's brand, customer loyalty, and level of annoyance customers report. 
+The most easily measurable cost are the direct financial costs associated with software bugs. According to Tricentis, the cost was a staggering 1.1 trillion dollars in 2016 alone [2]. This figure includes direct expenses such as engineering costs to fix the bugs, the cost to customers being unable or impeded to use the product. Less frequently thought-about costs include the impact on the company's brand, customer loyalty, and level of annoyance customers report.
 \par\noindent
 Moreover, the later a bug is found and repaired, the more expensive it is to fix. A 2008 IBM report found that after a bug makes its way through the design, implementation, testing, customer beta test and finally post-production release, it is roughly 30 times more expensive compared to finding it during the design phase [3]. The earlier throughout testing is done, the cheaper it is. The next figure illustrates the exponential cost nature of defect the later it is found in the development process. 
 
 \begin{center}
 \includegraphics[scale=0.7]{cost-test}
-\captionof{figure}{The cost of fixing a bug increases dramatically the later it is caught in development. [4]}
+\captionof{figure}{The cost of fixing a bug increases dramatically the later it is caught. [4]}
 \end{center}
 \par\noindent
 In extreme cases, the costs are staggering. A high-profile case was Mariner 1, a 1962 NASA spacecraft with destination to Venus. Shortly after takeoff, it veered off course due to a software bug and \$18 million was lost [5]. Amazon Web Services went down for 4 hours causing nearly \$50 million dollars in lost revenue [6]. A software bug in the Therac-25 radiation machine caused larger-than-required dosage to be sent causing at least 3 deaths [7]. These examples are outliers, with thousands of smaller cases of bugs causing unexpected and expensive incorrect behaviour but they illustrate the need for software testing.
 
 \subsection*{2.1.2 Motivation: Customer Happiness}
 \par\noindent
-Another common motivating factor is that better testing leads to happier customers. It is hard to measure customer happiness objectively but Medrad, a medical imaging equipment manufacturer, saw an annual revenue growth of 15\% for four years, which it attributed to instituting a quality assurance (QA) program. Similarly, Johnson Controls, an automobile company, found as part of their QA efforts that every 1\% increase in customer satisfaction lead to a \$13 million positive impact on their bottom line [8].
+Another common motivating factor is that better testing leads to happier customers. It is hard to measure customer happiness objectively but Medrad, a medical imaging equipment manufacturer, saw an annual revenue growth of 15\% for four years, which it attributed to a growing customer base after instituting a quality assurance (QA) program. Similarly, Johnson Controls, an automobile company, found as part of their QA efforts that every 1\% increase in customer satisfaction lead to a \$13 million positive impact on their bottom line [8].
 
 \subsection*{2.1.2 Why Testing is Difficult}
 \addcontentsline{toc}{section}{Introduction}
@@ -191,10 +189,10 @@ To illustrate this point, consider the following simple pusedo-code:
 \end{algorithm}
 
 \par\noindent
-The number of aspects there is to analyze for test purposes is virtually limitless. For the snippet above, a type-conscience programmer might ask what types are $a$ and $b$ expected to be? Are they integers, floating-point numbers, or could they even be complex types like imaginary numbers or could $a$ be an array and $b$ an integer? Are these considerations that we should test for or these assumptions fair to make given the domain of the system? Do we need to test for every combination of number or is it sufficient to test certain edge cases?\\
+The number of aspects there is to analyze for test purposes is virtually limitless. For the snippet above, a type-conscience programmer might ask what types are $a$ and $b$ expected to be? Are they integers, floating-point numbers, or could they even be complex types like imaginary numbers or could $a$ be an array and $b$ an integer? Are these considerations that we should test for or these assumptions fair to make given the domain of the system? Do we need to test for every combination of number or is it sufficient to test certain edge cases? The answer to these questions will depend on an application's own error tolerance. \\
 
 \par\noindent
-Language-specific considerations also need to be taken into taken. For example, python2 and C (with integers) will return $1 / 2 = 0$ but python3 will do float division with integers so $1 / 2 = 0.5$. A computer scientist might also point out edge cases when the result exceeds the $[-2^{31}, 2^{31}-1]$ range for 32-bit signed integers leading to under/overflow. Finally a mathematician mind might ask what would happen for the cases $a/0$, $0/0$. The amount of knowledge and proper discretion required to test even trivial functions is surprising.
+Language-specific considerations also need to be taken into account. For example, python2 and C (with integers) will return $1 / 2 = 0$ but python3 will do float division with integers so $1 / 2 = 0.5$. A computer scientist might also point out edge cases when the result exceeds the $[-2^{31}, 2^{31}-1]$ range for 32-bit signed integers leading to under/overflow. Finally a mathematician mind might ask what would happen for the cases $a/0$ or $0/0$. The amount of knowledge and proper discretion required to test even trivial functions is so high that, save for space and medical applications, it is unnecessary and wasteful to test every case.
 
 \section*{2.2 Types}
 
@@ -202,26 +200,26 @@ Traditionally, testing can be divided into two large categories: white and black
 
 \subsection*{2.2.1 White-box Testing}
 \par\noindent
-White-box includes any tests where the implementation is known to the developer. It is usually done at the unit phase. White-box testing has some advantages and disadvantages compared to black-box testing.
+White-box includes any tests where the implementation is known to the developer. It is usually done at the unit phase. White-box testing has some advantages and disadvantages compared to black-box testing. 
 
 \par\noindent
-Generally white-box tests are more throughout than black-box since developers can put emphasis on more complex sections of the code. For similar reasons, performance issues can be identified here. Automating the tests is easier when the implementation is known.
+Generally white-box tests are more throughout than black-box since developers can put emphasis on more complex sections of the code. For this reason, performance issues are more easily identified here. Automating the tests is easier when the implementation is known.
 
 \par\noindent
-There are downsides too. For one, only a programmer is able to write tests. The number of inputs can frequently be to high to test accurately. White-box testing also has bias to the existing code-base and will fail to find shortcomings in already-present behaviour.
+There are downsides too. For one, only a programmer is able to write tests. The number of inputs can frequently be to high to test accurately and may bias low-probability input (both a pro and con). White-box testing also has bias to the existing code-base and will fail to find shortcomings in current behaviour.
 
 
 \subsection*{2.2.2 Black-box Testing}
 \par\noindent
-Black-box is roughly the opposite of white-box testing. A tester knows \textit{what} the software should do but not \textit{how} it does it. It has the benefit of being able to be tested by anyone even without particular programming knowledge. They are closer to the product specification.
+Black-box is roughly the opposite of white-box testing. A tester knows \textit{what} the software should do but not \textit{how} it does it. It has the benefit of being able to be tested by anyone even without particular programming knowledge. They are closer to the product specification but it can be easier to miss edge-cases compared to white-box testing.
 
 \section*{2.3 Testing Phases}
 \par\noindent
-Different phases of testing are appropriate for different degrees of specificity of a software testing. Each has its advantages and drawbacks and therefore the phases are often combined as part of a testing strategy.\\
+Different phases of testing are appropriate for different degrees of specificity of a software testing. Each has its advantages and drawbacks and therefore the phases are often combined as part of a testing pipeline.
 
 \subsection*{2.3.1 Unit Testing}
 \par\noindent
-Unit tests code on a functional-level. Generally they are written to ensure function-level behaviour is correct. A unit test minimally verify every branches of logic and test the most complex or edge cases. Unit testing is indented to be used along with other testing method to complete a full testing strategy.
+Unit tests code on a functional-level. Generally they are written to ensure function or class-level behaviour is correct. A unit test minimally verify every branches of logic and test the most complex or edge cases. Unit testing is indented to be used along with other testing method to complete a full testing strategy.
 
 \begin{table}[ht]
 \begin{tabularx}{\linewidth}{>{\parskip1ex}X@{\kern4\tabcolsep}>{\parskip1ex}X}
@@ -294,20 +292,24 @@ Jasmine and Karma are the testing framework and test runner that allow for unit-
 Python nosetests are similar to Jasmine and Karma unit tests but for the backend instead of the frontend. They are divided from each individual file into the three divisions of our server code: gateways, service, and endpoints. Python has a mature first-party testing framework and generally accomplishes the theoretical goals of unit tests to be discrete, independent, and complete. Nonetheless, one downside is the automated tests for database communication is lengthy because each unit tests clears the database.
 
 \par\noindent
-Frisby is used for integration testing. It allows for HTTP requests to be made to different endpoint. For example, a test case could be to create a question and add it to a survey using the (\texttt{/api/create\_survey} and \texttt{/api/add\_survey\_question/1} endpoints). It fills it purpose to test the endpoint integration.
-
+Frisby is used for integration testing. It allows for HTTP requests to be made to different endpoint. For example, a test case could be to create a question and add it to a survey using the (\texttt{/api/create\_survey} and \texttt{/api/add\_survey\_question/1} endpoints). It fufills its purpose to test endpoint integration.
 
 \par\noindent
-Finally, there is Selenium which is a web browser automation tool. It allows for a realistic recreation of how the client would see and use the website. As such it can be considered a hybrid of integration and system testing. It allows for nearly arbitrary complex tests but the downside it is considerable more difficult to write, and often more brittle than than other testing technologies. For example, a graphical overhaul would require re-writing Selenium.
+Finally, there is Selenium, a web browser automation tool. It allows for a realistic recreation of how the client would see and use the website. As such it can be considered a hybrid of integration and system testing. It allows for nearly arbitrary complex tests but the downside it is considerable more difficult to write, and often more brittle than than other testing technologies. For example, a graphical overhaul would require re-writing Selenium test cases.
 
 \par\noindent
 Each of these technologies has their limitations but together they cover the full-spectrum of tests. Karma/Jasmine cover the frontend. Frisby/Nosetests cover the backend. Selenium acts as the bridge between them. The figure below visually illustrates where each technology fits in the overall testing strategy.
+
+\begin{center}
+\includegraphics[scale=0.3]{infra}
+\captionof{figure}{Four main technologies forming our testing infrastructure}
+\end{center}
 
 \newpage\thispagestyle{fancy}\sectionfont{\scshape}
 \section*{3.0 Conclusion}
 \addcontentsline{toc}{section}{Conclusion}
 \par\noindent
-As our product matures, stability has increased importance and so has the dependence on making full-fledged automated tests. Increasing testing reduces the odds of a disaster, increases customer satisfaction, and is correlated with increased revenues. Though perfect testing is impossible, the stand unit, integration, system, and acceptance testing pipeline is an effective way of having practical and useful tests. The explanation of our application of this theoretical modal on practical product testing should reinforce some of the strengths and weaknesses in the real-world.
+As Perception matures, so does the importance for stability and thereby full-fledged automated tests. Increasing testing reduces the odds of a disaster, increases customer satisfaction, and is correlated with increased revenues. Though perfect testing is practically impossible, the unit, integration, system, and acceptance testing pipeline is an effective way of having practical and useful tests. The explanation of our application of this theoretical modal on practical product testing should highlight some of the strengths and weaknesses in the real-world. Automated software testing is a powerful tool towards achiving unparalleled quality.
 
  \noindent
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.8.18)  21 AUG 2018 01:14
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.8.18)  21 AUG 2018 22:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -725,82 +725,66 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[2] [3]
-Overfull \hbox (0.19778pt too wide) in paragraph at lines 132--135
-\T1/futs/m/n/12 about the ad-van-tages, dis-ad-van-tages, and trade-offs of a v
-a-ri-ety of test-ing ap-proaches
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 132--135
-
- []
-
-[4]
-Underfull \hbox (badness 10000) in paragraph at lines 150--151
+[2] [3] [4]
+Underfull \hbox (badness 10000) in paragraph at lines 148--149
 
  []
 
 [1]
 LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <14.4> not available
-(Font)              Font shape `T1/futs/b/n' tried instead on input line 156.
+(Font)              Font shape `T1/futs/b/n' tried instead on input line 154.
 <img/cost-test.jpg, id=26, 530.98375pt x 419.5675pt>
 File: img/cost-test.jpg Graphic file (type jpg)
 <use img/cost-test.jpg>
-Package pdftex.def Info: img/cost-test.jpg  used on input line 166.
+Package pdftex.def Info: img/cost-test.jpg  used on input line 164.
 (pdftex.def)             Requested size: 371.68608pt x 293.69524pt.
 LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <10.95> not available
-(Font)              Font shape `T1/futs/b/n' tried instead on input line 167.
+(Font)              Font shape `T1/futs/b/n' tried instead on input line 165.
  [2] [3 <./img/cost-test.jpg>]
-Overfull \hbox (17.62482pt too wide) detected at line 191
+Overfull \hbox (17.62482pt too wide) detected at line 189
 [][] 
  []
 
 LaTeX Font Info:    Try loading font information for FML+futmi on input line 19
-4.
+2.
 (/usr/share/texlive/texmf-dist/tex/latex/fourier/fmlfutmi.fd
 File: fmlfutmi.fd 2004/10/30 Fontinst v1.926 font definitions for FML/futmi.
 )
 LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 11.03998pt on input line 194.
+(Font)              scaled to size 11.03998pt on input line 192.
 LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 8.27998pt on input line 194.
+(Font)              scaled to size 8.27998pt on input line 192.
 LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 6.43999pt on input line 194.
+(Font)              scaled to size 6.43999pt on input line 192.
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 11.03998pt on input line 194.
+(Font)              scaled to size 11.03998pt on input line 192.
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 8.27998pt on input line 194.
+(Font)              scaled to size 8.27998pt on input line 192.
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 6.43999pt on input line 194.
+(Font)              scaled to size 6.43999pt on input line 192.
 
-Underfull \hbox (badness 10000) in paragraph at lines 193--195
+Underfull \hbox (badness 10000) in paragraph at lines 191--193
 
  []
 
 [4]
-Overfull \hbox (6.76582pt too wide) in paragraph at lines 201--202
+Overfull \hbox (6.76582pt too wide) in paragraph at lines 199--200
 \T1/futs/m/n/12 test-ing. White-box test-ing refers to test-ing when the im-ple
 -men-ta-tion is known whereas
  []
 
-[5]
-Underfull \hbox (badness 10000) in paragraph at lines 219--221
-
- []
-
-[6]
-Underfull \hbox (badness 2486) in paragraph at lines 244--244
+[5] [6]
+Underfull \hbox (badness 2486) in paragraph at lines 242--242
 []$\FMS/futm/m/n/12 ^^O$ \T1/futs/m/n/12 Can be writ-ten in-de-pen-dently of
  []
 
 
-Underfull \hbox (badness 1147) in paragraph at lines 244--244
+Underfull \hbox (badness 1147) in paragraph at lines 242--242
 []$\FMS/futm/m/n/12 ^^O$ \T1/futs/m/n/12 Doesn't cover in-ter-ac-tion be-tween
  []
 
 
-Underfull \hbox (badness 1292) in paragraph at lines 268--268
+Underfull \hbox (badness 1292) in paragraph at lines 266--266
 \T1/futs/m/n/12 on code struc-ture $\FMS/futm/m/n/12 ^^O$ \T1/futs/m/n/12 Not a
 s easy to
  []
@@ -809,52 +793,57 @@ s easy to
 <img/karma.png, id=52, 727.71875pt x 225.84375pt>
 File: img/karma.png Graphic file (type png)
 <use img/karma.png>
-Package pdftex.def Info: img/karma.png  used on input line 289.
+Package pdftex.def Info: img/karma.png  used on input line 287.
 (pdftex.def)             Requested size: 291.08234pt x 90.33589pt.
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 297.
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 295.
 
  (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 ) [9 <./img/karma.png (PNG copy)>]
-Overfull \hbox (16.97374pt too wide) in paragraph at lines 303--305
+Overfull \hbox (16.97374pt too wide) in paragraph at lines 300--302
 \T1/futs/m/n/12 Each of these tech-nolo-gies has their lim-i-ta-tions but to-ge
 ther they cover the full-spectrum
  []
 
-[10] [11]
-Overfull \hbox (69.19142pt too wide) in paragraph at lines 325--326
+<img/infra.png, id=56, 1010.77625pt x 547.04375pt>
+File: img/infra.png Graphic file (type png)
+<use img/infra.png>
+Package pdftex.def Info: img/infra.png  used on input line 304.
+(pdftex.def)             Requested size: 303.23521pt x 164.11438pt.
+[10 <./img/infra.png>] [11]
+Overfull \hbox (69.19142pt too wide) in paragraph at lines 327--328
 []\T1/futs/m/n/10.95 Tricentis. "Soft-ware Fail Watch: 2016 in Re-view". Tri-ce
 n-tis, 2016. https://www.tricentis.com/resource-
  []
 
 
-Overfull \hbox (61.61049pt too wide) in paragraph at lines 327--328
+Overfull \hbox (61.61049pt too wide) in paragraph at lines 329--330
 \T1/futs/m/n/10.95 ity and lower de-vel-op-ment costs", Oct. 2008. ftp://ftp.so
 ftware.ibm.com/software/rational/info/do-
  []
 
 
-Overfull \hbox (255.21338pt too wide) in paragraph at lines 331--332
+Overfull \hbox (255.21338pt too wide) in paragraph at lines 333--334
 []\T1/futs/m/n/10.95 National Aero-nau-tics and Space Ad-min-is-tra-tion (NASA)
 . "Mariner 1", 2018. https://nssdc.gsfc.nasa.gov/nmc/spacecraftDisplay.do?id=MA
 RIN1 
  []
 
 
-Overfull \hbox (242.23769pt too wide) in paragraph at lines 333--335
+Overfull \hbox (242.23769pt too wide) in paragraph at lines 335--337
 []\T1/futs/m/n/10.95 Weise, Eliz-a-beth. "Mas-sive Ama-zon cloud ser-vice out-a
 ge dis-rupts sites" https://www.usatoday.com/story/tech/news/2017/02/28/amazons
 -
  []
 
 
-Overfull \hbox (12.01074pt too wide) in paragraph at lines 338--339
+Overfull \hbox (12.01074pt too wide) in paragraph at lines 340--341
 \T1/futs/m/n/10.95 https://smartbear.com/blog/test-and-monitor/how-quality-impa
 cts-your-bottom-line/ 
  []
 
 
-Overfull \hbox (72.26111pt too wide) in paragraph at lines 340--341
+Overfull \hbox (72.26111pt too wide) in paragraph at lines 342--343
 []\T1/futs/m/n/10.95 Rosa, San-ti-ago. "An-gu-lar: Unit Test-ing Jas-mine, Karm
 a". 30 Nov. 2017. https://medium.com/frontend-
  []
@@ -863,13 +852,13 @@ a". 30 Nov. 2017. https://medium.com/frontend-
 AED: lastpage setting LastPage
 [12] (./workreport.aux) ) 
 Here is how much of TeX's memory you used:
- 8032 strings out of 492982
- 122866 string characters out of 6134896
+ 8037 strings out of 492982
+ 122946 string characters out of 6134896
  329064 words of memory out of 5000000
- 11406 multiletter control sequences out of 15000+600000
+ 11410 multiletter control sequences out of 15000+600000
  90834 words of font info for 74 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 51i,11n,43p,676b,435s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 51i,11n,43p,733b,435s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1
 .enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/tex
 live/texmf-dist/fonts/type1/public/fourier/fourier-ms.pfb></usr/share/texlive/t
@@ -877,10 +866,10 @@ exmf-dist/fonts/type1/adobe/utopia/putb8a.pfb></usr/share/texlive/texmf-dist/fo
 nts/type1/adobe/utopia/putr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/ad
 obe/utopia/putri8a.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1200.p
 fb>
-Output written on workreport.pdf (17 pages, 153849 bytes).
+Output written on workreport.pdf (17 pages, 236556 bytes).
 PDF statistics:
- 86 PDF objects out of 1000 (max. 8388607)
+ 88 PDF objects out of 1000 (max. 8388607)
  57 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 16 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 21 words of extra memory for PDF output out of 10000 (max. 10000000)
 
