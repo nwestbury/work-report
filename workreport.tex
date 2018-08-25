@@ -203,7 +203,7 @@ Traditionally, testing can be divided into two large categories: white and black
 White-box includes any tests where the implementation is known to the developer. It is done at the unit testing phase. White-box testing has some advantages and disadvantages compared to black-box testing. 
 
 \par\noindent
-Generally white-box tests are more through than black-box since developers can put emphasis on more complex sections of the code. With knowledge of the underlying code, developers can test the code they know is most complex and therefore more risky. For this reason, performance issues are more easily identified here. Automating the tests is easier when the implementation is known.
+Generally white-box tests are more thorough than black-box since developers can put emphasis on more complex sections of the code. With knowledge of the underlying code, developers can test the code they know is most complex and therefore more risky. For this reason, performance issues are more easily identified here. Automating the tests is easier when the implementation is known.
 
 \par\noindent
 There are downsides too. For one, only a programmer is able to write tests. The number of inputs can frequently be too high to test throughly and may not be how the software would be used by a cusomter. White-box testing also has bias to the existing code-base and is generally worst at finding faults rather than testing existing behaviour.
@@ -293,7 +293,7 @@ Jasmine and Karma are the testing framework and test runner that allow for unit-
 Python nosetests are similar to Jasmine and Karma unit tests but for the backend instead of the frontend. They are divided from each individual file into the three divisions of our server code: gateways, service, and endpoints. Python has a mature first-party testing framework and generally accomplishes the theoretical goals of unit tests to be discrete, independent, and complete. Nonetheless, one downside is the automated tests for database communication is lengthy because each unit tests clears the database.
 
 \par\noindent
-Frisby is used for system testing. It allows for HTTP requests to be made to different endpoint. For example, a test case could be to create a question and add it to a survey using the (\texttt{/api/create\_survey} and \texttt{/api/add\_survey\_question/1} endpoints). Its purpose is to test endpoint backend system.
+Frisby is used for system testing. It allows for HTTP requests to be made to different endpoints. For example, a test case could be to create a question and add it to a survey using the (\texttt{/api/create\_survey} and \texttt{/api/add\_survey\_question/1} endpoints). Its purpose is to test the backend endpoints.
 
 \par\noindent
 Finally, there is Selenium, a web browser automation tool. It allows for a realistic recreation of how the client would see and use the website. It is used for full system testing. It allows for nearly arbitrary complex tests but the downside it is considerable more difficult to write, and often more brittle than than other testing technologies. For example, a graphical overhaul would require re-writing Selenium test cases.
